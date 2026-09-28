@@ -27,16 +27,36 @@ public sealed class EventuallyExecution<T>
         while (stopwatch.Elapsed < timeout)
         {
             var attemptNumber = attempts.Count + 1;
+            var attemptStopwatch = System.Diagnostics.Stopwatch.StartNew();
+            T? value = default;
 
             try
             {
-                var value = await _observation();
+                value = await _observation();
+            }
+            catch (Exception ex)
+            {
+                lastException = ex;
+                attempts.Add(new EventuallyAttempt(
+                    attemptNumber,
+                    stopwatch.Elapsed,
+                    attemptStopwatch.Elapsed,
+                    EventuallyAttemptKind.ObservationException,
+                    null,
+                    ex));
+                goto WaitForNextAttempt;
+            }
 
+            try
+            {
                 await _assertion(value);
 
                 attempts.Add(new EventuallyAttempt(
                     attemptNumber,
                     stopwatch.Elapsed,
+                    attemptStopwatch.Elapsed,
+                    EventuallyAttemptKind.Success,
+                    value,
                     null));
                 Report = CreateReport(timeout, stopwatch.Elapsed, attempts);
                 return;
@@ -47,9 +67,13 @@ public sealed class EventuallyExecution<T>
                 attempts.Add(new EventuallyAttempt(
                     attemptNumber,
                     stopwatch.Elapsed,
+                    attemptStopwatch.Elapsed,
+                    EventuallyAttemptKind.AssertionFailure,
+                    value,
                     ex));
             }
 
+        WaitForNextAttempt:
             var remaining = timeout - stopwatch.Elapsed;
             if (remaining <= TimeSpan.Zero)
                 break;

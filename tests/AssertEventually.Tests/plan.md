@@ -294,7 +294,7 @@ The entire purpose of this library is dealing with temporal behavior. The failur
 
 ---
 
-# 6. Attempt model
+# 6. Attempt model — complete
 
 Create an internal/publicly useful model representing an attempt.
 

@@ -17,6 +17,11 @@ exception. Successful executions expose this through
 `EventuallyTimeoutException`, which includes the same report while
 remaining compatible with `TimeoutException` catches.
 
+Each attempt is classified as an observation exception, assertion
+failure, or success, and includes the observed value when one was
+available. Reports can format observed values through the
+`IEventuallyValueFormatter` abstraction.
+
 Both synchronous observations and asynchronous assertions are supported:
 
 ```csharp

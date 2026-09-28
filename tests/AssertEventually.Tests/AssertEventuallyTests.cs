@@ -101,6 +101,11 @@ namespace AssertEventually.Tests
             Assert.NotEmpty(exception.Report.Attempts);
             Assert.All(exception.Report.Attempts, attempt =>
                 Assert.False(attempt.Succeeded));
+            Assert.All(
+                exception.Report.Attempts,
+                attempt => Assert.Equal(
+                    EventuallyAttemptKind.AssertionFailure,
+                    attempt.Kind));
             Assert.Equal(
                 exception.Report.Attempts[^1].Exception,
                 exception.InnerException);
@@ -129,11 +134,36 @@ namespace AssertEventually.Tests
             Assert.True(exception.Report.Attempts.Count >= 2);
             Assert.IsType<InvalidOperationException>(
                 exception.Report.Attempts[0].Exception);
+            Assert.Equal(
+                EventuallyAttemptKind.ObservationException,
+                exception.Report.Attempts[0].Kind);
             Assert.IsType<Xunit.Sdk.EqualException>(
                 exception.Report.Attempts[1].Exception);
+            Assert.Equal(
+                EventuallyAttemptKind.AssertionFailure,
+                exception.Report.Attempts[1].Kind);
             Assert.True(
                 exception.Report.Attempts[0].Elapsed
                 <= exception.Report.Attempts[1].Elapsed);
+        }
+
+        [Fact]
+        public async Task Reports_the_successful_attempt_and_observed_value()
+        {
+            EventuallyExecutionReport? report = null;
+
+            var execution = AssertEventually
+                .That<int>(value => Assert.Equal(2, value))
+                .For(() => 2);
+
+            await execution.Within(TimeSpan.FromSeconds(1));
+            report = execution.Report;
+
+            var attempt = Assert.Single(report!.Attempts);
+            Assert.Equal(EventuallyAttemptKind.Success, attempt.Kind);
+            Assert.Equal(2, attempt.ObservedValue);
+            Assert.True(attempt.Duration >= TimeSpan.Zero);
+            Assert.Equal("2", attempt.FormatObservedValue());
         }
     }
 }
