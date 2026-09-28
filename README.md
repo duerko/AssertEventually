@@ -37,6 +37,9 @@ await AssertEventually
     .Within(TimeSpan.FromSeconds(5));
 ```
 
+Timeouts are measured with a monotonic stopwatch, so system clock
+adjustments cannot extend or prematurely end a convergence window.
+
 Both synchronous observations and asynchronous assertions are supported:
 
 ```csharp

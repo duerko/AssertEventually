@@ -421,7 +421,7 @@ However, polling configuration should remain separate from the core assertion se
 
 ---
 
-# 9. Timeout must use a monotonic clock
+# 9. Timeout must use a monotonic clock — complete
 
 Do not calculate elapsed time exclusively using:
 
