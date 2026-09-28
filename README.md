@@ -89,6 +89,9 @@ name avoids breaking the established API.
 
 ## Execution semantics
 
+The complete execution contract is documented in
+[`docs/semantics.md`](docs/semantics.md).
+
 The core execution model records an ordered convergence timeline. Each
 attempt includes its elapsed time and any observation or assertion
 exception. Successful executions expose this through

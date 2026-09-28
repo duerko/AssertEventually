@@ -1495,7 +1495,7 @@ These are all potentially useful, but they turn a focused library into a platfor
 
 Build the generic primitive first.
 
-# 52. Documentation for failure semantics — pending
+# 52. Documentation for failure semantics — complete
 
 Create a dedicated document:
 
@@ -1517,6 +1517,10 @@ Justification
 The most important feature of AssertEventually is not its syntax. It is its semantics.
 
 Users need a canonical specification to know exactly what the library guarantees.
+
+`docs/semantics.md` now defines retries, exception handling, timeout and
+cancellation behavior, timing, polling, and bounded diagnostic
+retention. The README links to it from the execution-semantics section.
 
 # 53. README visual polish — pending
 
