@@ -97,6 +97,10 @@ timeline through NUnit's assertion output.
 The MSTest adapter provides `MSTestEventually.AssertAsync(...)` and
 routes timeout diagnostics through MSTest's native assertion output.
 
+The TUnit adapter provides `TUnitEventually.AssertAsync(...)` and
+surfaces timeout diagnostics as a TUnit test failure while retaining
+the original timeout exception as the inner exception.
+
 Both synchronous observations and asynchronous assertions are supported:
 
 ```csharp

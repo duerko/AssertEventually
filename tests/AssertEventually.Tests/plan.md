@@ -752,7 +752,7 @@ MSTest's TestContext is explicitly designed to provide test-run information and 
 
 ---
 
-# 22. TUnit integration
+# 22. TUnit integration — complete
 
 Support TUnit as a first-class framework.
 
