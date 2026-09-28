@@ -1066,6 +1066,11 @@ A framework adapter that compiles but doesn't behave correctly inside the real r
 
 MTP/VSTest behavior differs across frameworks, so real runner tests are necessary.
 
+Dedicated xUnit, NUnit, MSTest, and TUnit test projects are now present
+under `tests/` with successful-execution and timeout-path tests. The
+status remains pending until all four projects are verified under their
+actual runners in this environment and artifact assertions are added.
+
 # 34. Package targeting — complete
 
 Target a modern baseline initially, preferably:
