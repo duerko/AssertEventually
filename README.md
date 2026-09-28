@@ -67,6 +67,12 @@ AssertEventually says, “observe this system repeatedly until it reaches
 the expected state.” The operation that changes the system should happen
 once; the observation and assertion are what repeat.
 
+This is also different from a test-runner retry. A test retry reruns
+the entire test, including setup and side effects, after failure.
+AssertEventually keeps one test scenario intact and repeatedly checks
+the changing system state, avoiding duplicate messages, orders, or
+resources.
+
 The public entry point intentionally uses the fluent
 `AssertEventually.That(...)` form. When an explicit type reference is
 needed, use `global::AssertEventually.AssertEventually`; retaining this

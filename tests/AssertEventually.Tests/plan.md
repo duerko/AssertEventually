@@ -1287,7 +1287,7 @@ The README now explicitly distinguishes repeated observation from
 rerunning an operation, and states that the state-changing operation
 should happen once.
 
-# 42. Explain the difference from test retries — pending
+# 42. Explain the difference from test retries — complete
 
 Include:
 
@@ -1311,6 +1311,9 @@ Justification
 Test retries can repeat setup and side effects, potentially creating duplicate messages/orders/resources.
 
 AssertEventually keeps the scenario intact and repeatedly observes the same system state.
+
+The README now documents this distinction and calls out the risk of
+duplicating setup or side effects through whole-test retries.
 
 # 43. Add a "When not to use AssertEventually" section — pending
 
