@@ -27,6 +27,16 @@ Recorded history is bounded by default. Pass
 retain the first and most recent attempts and expose the number of
 omitted attempts.
 
+Polling defaults to 100 ms and can be configured per execution:
+
+```csharp
+await AssertEventually
+    .That<int>(value => Assert.Equal(42, value))
+    .For(() => GetValue())
+    .PollEvery(TimeSpan.FromMilliseconds(250))
+    .Within(TimeSpan.FromSeconds(5));
+```
+
 Both synchronous observations and asynchronous assertions are supported:
 
 ```csharp

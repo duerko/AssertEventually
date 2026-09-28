@@ -7,6 +7,15 @@ public sealed class EventuallyExecution<T>
 
     public EventuallyExecutionReport? Report { get; private set; }
 
+    public EventuallyExecution<T> PollEvery(TimeSpan interval)
+    {
+        if (interval <= TimeSpan.Zero)
+            throw new ArgumentOutOfRangeException(nameof(interval), "Polling interval must be positive.");
+
+        _pollInterval = interval;
+        return this;
+    }
+
     internal EventuallyExecution(
         Func<T, Task> assertion,
         Func<Task<T>> observation)
@@ -14,6 +23,8 @@ public sealed class EventuallyExecution<T>
         _assertion = assertion;
         _observation = observation;
     }
+
+    private TimeSpan? _pollInterval;
 
     public async Task Within(
         TimeSpan timeout,
@@ -28,6 +39,14 @@ public sealed class EventuallyExecution<T>
             throw new ArgumentOutOfRangeException(
                 nameof(options),
                 "MaxRecordedAttempts must be at least 1.");
+        }
+
+        var pollInterval = _pollInterval ?? options.PollInterval;
+        if (pollInterval <= TimeSpan.Zero)
+        {
+            throw new ArgumentOutOfRangeException(
+                nameof(options),
+                "PollInterval must be positive.");
         }
 
         var stopwatch = System.Diagnostics.Stopwatch.StartNew();
@@ -107,7 +126,7 @@ public sealed class EventuallyExecution<T>
                 break;
 
             await Task.Delay(
-                TimeSpan.FromMilliseconds(Math.Min(100, remaining.TotalMilliseconds)));
+                remaining < pollInterval ? remaining : pollInterval);
         }
 
         var report = CreateReport(

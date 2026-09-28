@@ -184,5 +184,19 @@ namespace AssertEventually.Tests
                 exception.Report.Attempts[^1].Number,
                 exception.Report.OmittedAttemptCount + 2);
         }
+
+        [Fact]
+        public async Task Supports_configuring_the_polling_interval()
+        {
+            var attempts = 0;
+
+            await AssertEventually
+                .That<int>(value => Assert.Equal(2, value))
+                .For(() => ++attempts)
+                .PollEvery(TimeSpan.FromMilliseconds(10))
+                .Within(TimeSpan.FromSeconds(1));
+
+            Assert.Equal(2, attempts);
+        }
     }
 }

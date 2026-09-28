@@ -373,7 +373,7 @@ A diagnostic system that consumes unbounded memory during a test failure is unac
 
 ---
 
-# 8. Polling strategy
+# 8. Polling strategy — complete
 
 Implement a default polling interval.
 
