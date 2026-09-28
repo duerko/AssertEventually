@@ -1,0 +1,26 @@
+<Project>
+  <PropertyGroup>
+    <Authors>duerko</Authors>
+    <Company>duerko</Company>
+    <Copyright>Copyright © duerko</Copyright>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <RepositoryUrl>https://github.com/duerko/AssertEventually</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageProjectUrl>https://github.com/duerko/AssertEventually</PackageProjectUrl>
+    <PackageTags>testing;eventual-consistency;assertions;distributed-systems</PackageTags>
+    <PackageReleaseNotes>Initial package release.</PackageReleaseNotes>
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+    <PublishRepositoryUrl>true</PublishRepositoryUrl>
+    <EmbedUntrackedSources>true</EmbedUntrackedSources>
+    <EnablePackageValidation>true</EnablePackageValidation>
+  </PropertyGroup>
+
+  <ItemGroup Condition="'$(IsPackable)' != 'false'">
+    <None Include="$(MSBuildThisFileDirectory)README.md" Pack="true" PackagePath="\" />
+    <None Include="$(MSBuildThisFileDirectory)LICENSE" Pack="true" PackagePath="\" />
+    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="8.0.0"
+                      PrivateAssets="All" />
+  </ItemGroup>
+</Project>

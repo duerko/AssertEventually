@@ -1112,7 +1112,7 @@ because its models and renderers are useful to every adapter; a
 separate reporting package is deferred until that surface warrants
 independent versioning.
 
-# 36. Package metadata — pending
+# 36. Package metadata — complete
 
 Configure:
 
@@ -1130,6 +1130,11 @@ package validation
 Justification
 
 For an open-source library, NuGet is part of the product surface. Good metadata improves discoverability and makes the package trustworthy.
+
+`Directory.Build.props` now provides shared MIT license, repository,
+project URL, tags, README/license embedding, release notes, symbols,
+SourceLink, and package validation settings. Each library project adds
+its package-specific description.
 
 # 37. Analyzer/source documentation — pending
 
