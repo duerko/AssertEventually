@@ -263,6 +263,25 @@ Human-readable reports summarize equivalent timeline entries into
 segments; the complete retained attempt list remains available through
 the structured report.
 
+### Example timeout output
+
+```text
+AssertEventually failed
+
+Timeout:  00:00:10
+Elapsed:  00:00:10.03
+Attempts: 38
+Description: order eventually becomes processed; read order from replica
+
+Timeline:
+  00:00:00.01 - 00:00:00.28 ObservationException x 2
+  00:00:00.54 - 00:00:09.82 AssertionFailure x 35
+  00:00:10.03 AssertionFailure x 1
+
+Expected: Processed
+Last observed: Processing
+```
+
 Both synchronous observations and asynchronous assertions are supported:
 
 ```csharp

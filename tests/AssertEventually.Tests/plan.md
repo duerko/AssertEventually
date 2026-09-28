@@ -1589,7 +1589,7 @@ The architecture is simple enough to explain visually, and the diagram reinforce
 The README includes a Mermaid diagram showing the fluent entry point,
 polling engine, success path, and timeout report path.
 
-# 55. README failure example — pending
+# 55. README failure example — complete
 
 Include a realistic failure:
 
@@ -1621,6 +1621,10 @@ Last observed:
 Justification
 
 This is the feature that will make someone choose this library rather than writing their own loop.
+
+The README now includes a realistic timeout report with description,
+attempt count, grouped timeline entries, expected value, and final
+observed value.
 
 # 56. Package quality — pending
 
