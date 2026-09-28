@@ -4,6 +4,7 @@ public sealed class EventuallyExecution<T>
 {
     private readonly Func<T, Task> _assertion;
     private readonly Func<Task<T>> _observation;
+    private readonly string? _description;
     private CancellationToken _cancellationToken;
 
     public EventuallyExecutionReport? Report { get; private set; }
@@ -26,10 +27,12 @@ public sealed class EventuallyExecution<T>
 
     internal EventuallyExecution(
         Func<T, Task> assertion,
-        Func<Task<T>> observation)
+        Func<Task<T>> observation,
+        string? description)
     {
         _assertion = assertion;
         _observation = observation;
+        _description = description;
     }
 
     private TimeSpan? _pollInterval;
@@ -171,7 +174,7 @@ public sealed class EventuallyExecution<T>
             report);
     }
 
-    private static EventuallyExecutionReport CreateReport(
+    private EventuallyExecutionReport CreateReport(
         TimeSpan timeout,
         TimeSpan duration,
         List<EventuallyAttempt> attempts,
@@ -181,7 +184,8 @@ public sealed class EventuallyExecution<T>
             timeout,
             duration,
             attempts.AsReadOnly(),
-            omittedAttemptCount);
+            omittedAttemptCount,
+            _description);
     }
 
     private static void RecordAttempt(

@@ -6,17 +6,21 @@ public sealed class EventuallyExecutionReport
         TimeSpan timeout,
         TimeSpan duration,
         IReadOnlyList<EventuallyAttempt> attempts,
-        int omittedAttemptCount)
+        int omittedAttemptCount,
+        string? description)
     {
         Timeout = timeout;
         Duration = duration;
         Attempts = attempts;
         OmittedAttemptCount = omittedAttemptCount;
+        Description = description;
     }
 
     public TimeSpan Timeout { get; }
 
     public TimeSpan Duration { get; }
+
+    public string? Description { get; }
 
     public IReadOnlyList<EventuallyAttempt> Attempts { get; }
 

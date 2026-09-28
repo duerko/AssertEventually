@@ -20,6 +20,8 @@ public static class EventuallyReportFormatter
         builder.AppendLine($"Timeout:  {report.Timeout}");
         builder.AppendLine($"Elapsed:  {report.Duration}");
         builder.AppendLine($"Attempts: {report.AttemptCount}");
+        if (report.Description is not null)
+            builder.AppendLine($"Description: {report.Description}");
         builder.AppendLine();
         builder.AppendLine("Timeline:");
 

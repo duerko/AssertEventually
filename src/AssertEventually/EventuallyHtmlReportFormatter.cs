@@ -39,6 +39,8 @@ public static class EventuallyHtmlReportFormatter
         AppendDefinition(builder, "Timeout", report.Timeout.ToString());
         AppendDefinition(builder, "Elapsed", report.Duration.ToString());
         AppendDefinition(builder, "Attempts", report.AttemptCount.ToString());
+        if (report.Description is not null)
+            AppendDefinition(builder, "Description", report.Description);
         builder.Append("</dl>");
         builder.Append("<h2>Timeline</h2><table><thead><tr>");
         builder.Append("<th>#</th><th>Elapsed</th><th>Kind</th><th>Details</th>");

@@ -193,6 +193,35 @@ namespace AssertEventually.Tests
         }
 
         [Fact]
+        public async Task Includes_explicit_descriptions_in_reports()
+        {
+            var exception = await Assert.ThrowsAsync<EventuallyTimeoutException>(() =>
+                AssertEventually
+                    .That<int>(
+                        "order eventually becomes processed",
+                        value => Assert.Equal(42, value))
+                    .For(
+                        "read order from replica",
+                        () => 1)
+                    .Within(TimeSpan.FromMilliseconds(100)));
+
+            Assert.Equal(
+                "order eventually becomes processed; read order from replica",
+                exception.Report.Description);
+            Assert.Contains(
+                "Description: order eventually becomes processed; " +
+                "read order from replica",
+                EventuallyReportFormatter.Format(exception.Report));
+            Assert.Contains(
+                "\"description\": \"order eventually becomes processed; " +
+                "read order from replica\"",
+                EventuallyJsonReportFormatter.Format(exception.Report));
+            Assert.Contains(
+                "order eventually becomes processed; read order from replica",
+                EventuallyHtmlReportFormatter.Format(exception.Report));
+        }
+
+        [Fact]
         public async Task Formats_a_safe_structured_json_report()
         {
             var exception = await Assert.ThrowsAsync<EventuallyTimeoutException>(() =>

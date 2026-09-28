@@ -943,7 +943,7 @@ Justification
 
 This produces a much more useful failure experience while preserving complete information for debugging.
 
-# 29. Description capture — pending
+# 29. Description capture — complete
 
 Allow optional explicit descriptions:
 
@@ -964,6 +964,11 @@ Justification
 Lambda expressions cannot always be represented meaningfully at runtime.
 
 Explicit descriptions make reports dramatically better for CI failures.
+
+Descriptions are optional and are retained on
+`EventuallyExecutionReport`, including the assertion and observation
+descriptions when both are supplied. Text, JSON, and HTML reports
+include the combined description.
 
 # 30. Do not attempt source-code extraction initially — deferred
 

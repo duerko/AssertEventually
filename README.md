@@ -42,6 +42,23 @@ await AssertEventually
     .Within(TimeSpan.FromSeconds(5));
 ```
 
+Descriptions are optional and are included in the execution report and
+all built-in report formats:
+
+```csharp
+await AssertEventually
+    .That<int>(
+        "order eventually becomes processed",
+        value => Assert.Equal(42, value))
+    .For(
+        "read order from replica",
+        () => GetValue())
+    .Within(TimeSpan.FromSeconds(5));
+```
+
+When both descriptions are supplied, the report combines them as
+`assertion; observation`.
+
 Timeouts are measured with a monotonic stopwatch, so system clock
 adjustments cannot extend or prematurely end a convergence window.
 

@@ -19,6 +19,7 @@ public static class EventuallyJsonReportFormatter
             successful = report.Succeeded,
             timeout = report.Timeout.ToString(),
             elapsed = report.Duration.ToString(),
+            description = report.Description,
             attempts = report.AttemptCount,
             omittedAttempts = report.OmittedAttemptCount,
             attemptHistory = report.Attempts.Select(attempt => new
