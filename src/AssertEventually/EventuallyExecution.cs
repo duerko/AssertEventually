@@ -5,6 +5,8 @@ public sealed class EventuallyExecution<T>
     private readonly Action<T> _assertion;
     private readonly Func<Task<T>> _observation;
 
+    public EventuallyExecutionReport? Report { get; private set; }
+
     internal EventuallyExecution(
         Action<T> assertion,
         Func<Task<T>> observation)
@@ -15,29 +17,64 @@ public sealed class EventuallyExecution<T>
 
     public async Task Within(TimeSpan timeout)
     {
-        var deadline = DateTime.UtcNow + timeout;
+        if (timeout <= TimeSpan.Zero)
+            throw new ArgumentOutOfRangeException(nameof(timeout), "Timeout must be positive.");
+
+        var stopwatch = System.Diagnostics.Stopwatch.StartNew();
+        var attempts = new List<EventuallyAttempt>();
         Exception? lastException = null;
 
-        while (DateTime.UtcNow < deadline)
+        while (stopwatch.Elapsed < timeout)
         {
+            var attemptNumber = attempts.Count + 1;
+
             try
             {
                 var value = await _observation();
 
                 _assertion(value);
 
+                attempts.Add(new EventuallyAttempt(
+                    attemptNumber,
+                    stopwatch.Elapsed,
+                    null));
+                Report = CreateReport(timeout, stopwatch.Elapsed, attempts);
                 return;
             }
             catch (Exception ex)
             {
                 lastException = ex;
+                attempts.Add(new EventuallyAttempt(
+                    attemptNumber,
+                    stopwatch.Elapsed,
+                    ex));
             }
 
-            await Task.Delay(100);
+            var remaining = timeout - stopwatch.Elapsed;
+            if (remaining <= TimeSpan.Zero)
+                break;
+
+            await Task.Delay(
+                TimeSpan.FromMilliseconds(Math.Min(100, remaining.TotalMilliseconds)));
         }
 
-        throw new TimeoutException(
+        var report = CreateReport(timeout, stopwatch.Elapsed, attempts);
+        Report = report;
+
+        throw new EventuallyTimeoutException(
             $"The assertion did not pass within {timeout}.",
-            lastException);
+            lastException,
+            report);
+    }
+
+    private static EventuallyExecutionReport CreateReport(
+        TimeSpan timeout,
+        TimeSpan duration,
+        List<EventuallyAttempt> attempts)
+    {
+        return new EventuallyExecutionReport(
+            timeout,
+            duration,
+            attempts.AsReadOnly());
     }
 }

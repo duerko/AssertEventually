@@ -57,7 +57,7 @@ namespace AssertEventually.Tests
         [Fact]
         public async Task Throws_when_timeout_is_reached()
         {
-            await Assert.ThrowsAsync<TimeoutException>(() =>
+            var exception = await Assert.ThrowsAsync<EventuallyTimeoutException>(() =>
                 AssertEventually
                     .That<int>(value => Assert.Equal(42, value))
                     .For(
@@ -67,6 +67,43 @@ namespace AssertEventually.Tests
                             return 1;
                         })
                     .Within(TimeSpan.FromMilliseconds(100)));
+
+            Assert.NotEmpty(exception.Report.Attempts);
+            Assert.All(exception.Report.Attempts, attempt =>
+                Assert.False(attempt.Succeeded));
+            Assert.Equal(
+                exception.Report.Attempts[^1].Exception,
+                exception.InnerException);
+        }
+
+        [Fact]
+        public async Task Reports_observation_and_assertion_failures_in_order()
+        {
+            var attempts = 0;
+
+            var exception = await Assert.ThrowsAsync<EventuallyTimeoutException>(() =>
+                AssertEventually
+                    .That<int>(value => Assert.Equal(3, value))
+                    .For(
+                        async () =>
+                        {
+                            attempts++;
+
+                            if (attempts == 1)
+                                throw new InvalidOperationException("not ready");
+
+                            return 2;
+                        })
+                    .Within(TimeSpan.FromMilliseconds(150)));
+
+            Assert.True(exception.Report.Attempts.Count >= 2);
+            Assert.IsType<InvalidOperationException>(
+                exception.Report.Attempts[0].Exception);
+            Assert.IsType<Xunit.Sdk.EqualException>(
+                exception.Report.Attempts[1].Exception);
+            Assert.True(
+                exception.Report.Attempts[0].Elapsed
+                <= exception.Report.Attempts[1].Elapsed);
         }
     }
 }

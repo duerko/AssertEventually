@@ -9,3 +9,10 @@ expected state within a given amount of time.
 Failures and exceptions during the observation period are treated
 as intermediate observations. The test only fails if the expected
 condition is not eventually met.
+
+The core execution model records an ordered convergence timeline. Each
+attempt includes its elapsed time and any observation or assertion
+exception. Successful executions expose this through
+`EventuallyExecution.Report`; timed-out executions throw
+`EventuallyTimeoutException`, which includes the same report while
+remaining compatible with `TimeoutException` catches.
