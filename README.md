@@ -114,6 +114,10 @@ responsibility of the runner and its existing extensions.
 HTML timeline with escaped diagnostic values, timing metadata, status,
 and omitted-attempt information.
 
+Built-in formatters accept `EventuallyReportFormattingOptions` to
+limit diagnostic string length and redact sensitive content before it
+is rendered.
+
 Both synchronous observations and asynchronous assertions are supported:
 
 ```csharp

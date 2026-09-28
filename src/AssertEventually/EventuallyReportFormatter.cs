@@ -4,10 +4,13 @@ namespace AssertEventually;
 
 public static class EventuallyReportFormatter
 {
-    public static string Format(EventuallyExecutionReport report)
+    public static string Format(
+        EventuallyExecutionReport report,
+        EventuallyReportFormattingOptions? options = null)
     {
         ArgumentNullException.ThrowIfNull(report);
 
+        var formatter = new DefaultEventuallyValueFormatter(options);
         var builder = new StringBuilder();
         builder.AppendLine(
             report.Succeeded
@@ -29,12 +32,15 @@ public static class EventuallyReportFormatter
             {
                 builder.AppendLine(
                     $"         {attempt.Exception.GetType().Name}: " +
-                    attempt.Exception.Message);
+                    (options ?? new EventuallyReportFormattingOptions())
+                        .Format(attempt.Exception.Message));
+                builder.AppendLine(
+                    $"         Observed: {formatter.Format(attempt.ObservedValue)}");
             }
             else
             {
                 builder.AppendLine(
-                    $"         {attempt.FormatObservedValue()}");
+                    $"         {formatter.Format(attempt.ObservedValue)}");
             }
         }
 

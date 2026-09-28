@@ -6,11 +6,14 @@ public static class EventuallyJsonReportFormatter
 {
     public static string Format(
         EventuallyExecutionReport report,
-        IEventuallyValueFormatter? valueFormatter = null)
+        IEventuallyValueFormatter? valueFormatter = null,
+        EventuallyReportFormattingOptions? options = null)
     {
         ArgumentNullException.ThrowIfNull(report);
 
-        var formatter = valueFormatter ?? new DefaultEventuallyValueFormatter();
+        var formatter = valueFormatter
+            ?? new DefaultEventuallyValueFormatter(options);
+        var reportOptions = options ?? new EventuallyReportFormattingOptions();
         var payload = new
         {
             successful = report.Succeeded,
@@ -32,7 +35,7 @@ public static class EventuallyJsonReportFormatter
                     : new
                     {
                         type = attempt.Exception.GetType().FullName,
-                        message = attempt.Exception.Message
+                        message = reportOptions.Format(attempt.Exception.Message)
                     }
             })
         };

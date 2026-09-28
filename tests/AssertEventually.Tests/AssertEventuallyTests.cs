@@ -229,6 +229,27 @@ namespace AssertEventually.Tests
         }
 
         [Fact]
+        public async Task Applies_report_value_limits_and_redaction()
+        {
+            var exception = await Assert.ThrowsAsync<EventuallyTimeoutException>(() =>
+                AssertEventually
+                    .That<string>(value => Assert.Equal("ready", value))
+                    .For(() => "token=secret")
+                    .Within(TimeSpan.FromMilliseconds(150)));
+
+            var options = new EventuallyReportFormattingOptions
+            {
+                MaxStringLength = 8,
+                Redact = value => value.Replace("secret", "[redacted]")
+            };
+
+            var text = EventuallyReportFormatter.Format(exception.Report, options);
+
+            Assert.Contains("token=[r...", text);
+            Assert.DoesNotContain("secret", text);
+        }
+
+        [Fact]
         public async Task xUnit_adapter_surfaces_timeout_diagnostics()
         {
             var exception = await Assert.ThrowsAsync<global::Xunit.Sdk.XunitException>(() =>

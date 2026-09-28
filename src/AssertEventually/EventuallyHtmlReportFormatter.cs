@@ -5,11 +5,15 @@ namespace AssertEventually;
 
 public static class EventuallyHtmlReportFormatter
 {
-    public static string Format(EventuallyExecutionReport report)
+    public static string Format(
+        EventuallyExecutionReport report,
+        EventuallyReportFormattingOptions? options = null)
     {
         ArgumentNullException.ThrowIfNull(report);
 
         var status = report.Succeeded ? "PASSED" : "FAILED";
+        var formatter = new DefaultEventuallyValueFormatter(options);
+        var reportOptions = options ?? new EventuallyReportFormattingOptions();
         var builder = new StringBuilder("""
             <!doctype html>
             <html lang="en">
@@ -43,8 +47,9 @@ public static class EventuallyHtmlReportFormatter
         foreach (var attempt in report.Attempts)
         {
             var details = attempt.Exception is null
-                ? attempt.FormatObservedValue()
-                : $"{attempt.Exception.GetType().Name}: {attempt.Exception.Message}";
+                ? formatter.Format(attempt.ObservedValue)
+                : $"{attempt.Exception.GetType().Name}: " +
+                  reportOptions.Format(attempt.Exception.Message);
             builder.Append("<tr><td>")
                 .Append(attempt.Number)
                 .Append("</td><td>")

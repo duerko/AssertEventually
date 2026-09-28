@@ -860,7 +860,7 @@ The HTML report should become a signature feature of the project.
 
 ---
 
-# 26. Report safety
+# 26. Report safety — complete
 
 Do not automatically dump arbitrary object graphs into reports without limits.
 
