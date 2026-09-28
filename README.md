@@ -66,6 +66,10 @@ Successful executions retain their report for optional diagnostics;
 `EventuallyExecution.Report.Succeeded` identifies successful
 convergence without producing output automatically.
 
+Reports also expose total attempt count, the last observed value, and
+the last exception for integrations that do not need to render every
+timeline entry.
+
 Both synchronous observations and asynchronous assertions are supported:
 
 ```csharp

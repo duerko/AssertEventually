@@ -22,9 +22,15 @@ public sealed class EventuallyExecutionReport
 
     public int OmittedAttemptCount { get; }
 
+    public int AttemptCount => Attempts.Count + OmittedAttemptCount;
+
     public bool Succeeded => LastAttempt?.Succeeded == true;
 
     public EventuallyAttempt? LastAttempt => Attempts.Count == 0
         ? null
         : Attempts[^1];
+
+    public object? LastObservedValue => LastAttempt?.ObservedValue;
+
+    public Exception? LastException => LastAttempt?.Exception;
 }

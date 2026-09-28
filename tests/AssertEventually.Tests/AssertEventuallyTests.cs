@@ -167,6 +167,7 @@ namespace AssertEventually.Tests
             Assert.True(attempt.ObservationDuration >= TimeSpan.Zero);
             Assert.True(attempt.AssertionDuration >= TimeSpan.Zero);
             Assert.Equal("2", attempt.FormatObservedValue());
+            Assert.Equal(2, report.LastObservedValue);
         }
 
         [Fact]
@@ -182,6 +183,9 @@ namespace AssertEventually.Tests
 
             Assert.Equal(2, exception.Report.Attempts.Count);
             Assert.True(exception.Report.OmittedAttemptCount > 0);
+            Assert.Equal(
+                exception.Report.AttemptCount,
+                exception.Report.Attempts[^1].Number);
             Assert.Equal(1, exception.Report.Attempts[0].Number);
             Assert.Equal(
                 exception.Report.Attempts[^1].Number,

@@ -536,7 +536,7 @@ But noisy test output is undesirable, so successful diagnostics should be opt-in
 
 ---
 
-# 15. Diagnostic report model
+# 15. Diagnostic report model — complete
 
 Create a framework-independent:
 
