@@ -62,7 +62,7 @@ The library must optimize for these scenarios rather than becoming a generic ret
 
 ---
 
-# 1. Repository architecture — pending
+# 1. Repository architecture — complete
 
 Create a multi-project solution.
 
@@ -1833,8 +1833,8 @@ audit:
 
 * **Section 1** (repository architecture, pending): `docs/`,
   `CHANGELOG.md`, `Directory.Build.props`, benchmark sources, and
-  per-adapter test projects now exist. `samples/` and
-  `CONTRIBUTING.md` remain outstanding.
+  per-adapter test projects now exist. The sample project and
+  contributor guide are also present.
 * **Sections 19–22** (framework integrations): the missing native
   artifact attachment was implemented by section 59, but real
   framework-runner integration tests remain covered by section 33.
