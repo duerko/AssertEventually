@@ -568,7 +568,7 @@ This report becomes the single source of truth for every integration.
 
 ---
 
-# 16. Human-readable report
+# 16. Human-readable report — complete
 
 Build a formatter:
 

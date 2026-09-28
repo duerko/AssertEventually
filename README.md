@@ -70,6 +70,10 @@ Reports also expose total attempt count, the last observed value, and
 the last exception for integrations that do not need to render every
 timeline entry.
 
+Use `EventuallyReportFormatter.Format(report)` to render a
+framework-neutral human-readable timeline for logs, CI output, or
+custom test integrations.
+
 Both synchronous observations and asynchronous assertions are supported:
 
 ```csharp

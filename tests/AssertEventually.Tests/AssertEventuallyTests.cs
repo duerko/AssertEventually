@@ -171,6 +171,27 @@ namespace AssertEventually.Tests
         }
 
         [Fact]
+        public async Task Formats_a_human_readable_report()
+        {
+            var exception = await Assert.ThrowsAsync<EventuallyTimeoutException>(() =>
+                AssertEventually
+                    .That<int>(value => Assert.Equal(42, value))
+                    .For(() => 1)
+                    .Within(
+                        TimeSpan.FromMilliseconds(150),
+                        new EventuallyOptions { MaxRecordedAttempts = 1 }));
+
+            var text = EventuallyReportFormatter.Format(exception.Report);
+
+            Assert.Contains("AssertEventually failed", text);
+            Assert.Contains("Timeout:", text);
+            Assert.Contains("Attempts:", text);
+            Assert.Contains("AssertionFailure", text);
+            Assert.Contains("EqualException", text);
+            Assert.Contains("attempt(s) omitted", text);
+        }
+
+        [Fact]
         public async Task Limits_recorded_attempt_history()
         {
             var exception = await Assert.ThrowsAsync<EventuallyTimeoutException>(() =>
