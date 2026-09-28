@@ -1831,30 +1831,25 @@ against the repository and now carry explicit `complete`, `pending`, or
 `deferred` markers. Confirmed gaps and intentional deferrals as of this
 audit:
 
-* **Section 1** (repository architecture, marked complete): `docs/`,
-  `samples/`, `CHANGELOG.md`, `CONTRIBUTING.md`,
-  `Directory.Build.props`, and per-adapter test projects
-  (`AssertEventually.Xunit.Tests`, `AssertEventually.NUnit.Tests`,
-  `AssertEventually.MSTest.Tests`, `AssertEventually.TUnit.Tests`)
-  don't exist.
+* **Section 1** (repository architecture, pending): `docs/`,
+  `CHANGELOG.md`, `Directory.Build.props`, benchmark sources, and
+  per-adapter test projects now exist. `samples/` and
+  `CONTRIBUTING.md` remain outstanding.
 * **Sections 19–22** (framework integrations): the missing native
   artifact attachment was implemented by section 59, but real
   framework-runner integration tests remain covered by section 33.
-* **Section 33** (integration-test the framework integrations): no
-  test project runs any adapter under NUnit's, MSTest's, or TUnit's
-  real runner at all (only xUnit has a test project, and it only
-  covers the timeout path).
-* **Section 34** (package targeting, recommends `net8.0` baseline):
-  every `.csproj` still targets `net10.0` only.
-* **Sections 35/36/56** (NuGet package design/metadata/quality): no
-  `.csproj` sets `PackageId`, `Version`, `Description`, license,
-  tags, README embedding, or SourceLink; no XML documentation exists
-  anywhere in `src/` (section 37 is also untouched).
-* **Sections 38–43, 53–55** (README design and positioning):
-  `README.md` is still a flat feature log with no hero section, no
-  "why it's not a retry library" framing, no "when not to use it"
-  section, and no badges/diagram, despite `copilot-instructions.md`
-  already containing the right positioning line to build from.
+* **Section 33** (integration-test the framework integrations):
+  dedicated xUnit, NUnit, MSTest, and TUnit runner projects now exist
+  and have passing success-path coverage. Timeout paths are present,
+  but NUnit's intentional failure case is explicit and artifact/
+  cancellation assertions remain outstanding.
+* **Sections 34–37 and 56** (targeting, packaging, and documentation):
+  `net8.0`, package metadata, SourceLink, XML documentation, package
+  validation, and release notes now exist.
+* **Sections 38–43 and 53–55** (README design and positioning): the
+  README now has a hero, badges, structured sections, retry
+  distinctions, usage boundaries, examples, a Mermaid diagram, and a
+  failure report.
 * **Section 44/45** (CI pipeline): intentionally deferred for now, per
   explicit direction — do not start this until asked.
 
