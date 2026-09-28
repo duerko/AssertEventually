@@ -77,6 +77,10 @@ Cancellation stops polling and propagates `OperationCanceledException`.
 The core loop uses asynchronous observation, assertion, and delay
 operations without blocking waits or sleeps.
 
+Assertions from existing libraries such as FluentAssertions can be used
+directly inside `That(...)`; AssertEventually does not require a
+framework-specific assertion package for them.
+
 Each attempt also records how long its observation took, separately
 from the total attempt duration.
 

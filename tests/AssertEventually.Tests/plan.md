@@ -982,7 +982,7 @@ FluentAssertions already demonstrates how valuable subject identification can be
 
 Add this only if real-world usage demonstrates that descriptions are insufficient.
 
-# 31. FluentAssertions compatibility — pending
+# 31. FluentAssertions compatibility — complete
 
 Do not create a FluentAssertions integration package initially.
 
@@ -1000,6 +1000,11 @@ Justification
 FluentAssertions already provides rich assertion exceptions and supports multiple .NET test frameworks.
 
 AssertEventually should wrap existing assertion ecosystems rather than compete with them.
+
+The core API accepts ordinary synchronous or asynchronous delegates, so
+FluentAssertions calls work without a dedicated integration package.
+Their assertion exceptions are captured as normal assertion failures and
+remain available in the eventual execution report.
 
 # 32. Test the semantics heavily — pending
 
