@@ -105,6 +105,11 @@ Microsoft.Testing.Platform can consume the human-readable or JSON
 report through a future runner integration, but it is intentionally
 not a dependency of the core library or its framework adapters.
 
+The convergence timeline is the library's unique artifact. Integrations
+may request text, JSON, or HTML files under an
+`assert-eventually/` directory; generic runner formats remain the
+responsibility of the runner and its existing extensions.
+
 Both synchronous observations and asynchronous assertions are supported:
 
 ```csharp

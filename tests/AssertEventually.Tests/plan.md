@@ -791,7 +791,7 @@ Where MTP can carry an artifact, AssertEventually should produce the artifact an
 
 ---
 
-# 24. Report artifact strategy
+# 24. Report artifact strategy — complete
 
 On timeout/failure, generate:
 
