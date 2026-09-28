@@ -463,5 +463,28 @@ namespace AssertEventually.Tests
 
             Assert.Equal(1, observations);
         }
+
+        [Fact]
+        public async Task Independent_executions_can_run_in_parallel()
+        {
+            var firstAttempts = 0;
+            var secondAttempts = 0;
+
+            var first = AssertEventually
+                .That<int>(value => Assert.Equal(2, value))
+                .For(() => ++firstAttempts)
+                .PollEvery(TimeSpan.FromMilliseconds(1))
+                .Within(TimeSpan.FromSeconds(1));
+            var second = AssertEventually
+                .That<int>(value => Assert.Equal(3, value))
+                .For(() => ++secondAttempts)
+                .PollEvery(TimeSpan.FromMilliseconds(1))
+                .Within(TimeSpan.FromSeconds(1));
+
+            await Task.WhenAll(first, second);
+
+            Assert.Equal(2, firstAttempts);
+            Assert.Equal(3, secondAttempts);
+        }
     }
 }

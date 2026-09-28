@@ -1409,7 +1409,7 @@ coverage for immediate success and bounded diagnostic-history
 executions. Benchmarks are kept outside the product and test projects
 and are not run as part of ordinary unit-test validation.
 
-# 48. Thread-safety and parallel tests — pending
+# 48. Thread-safety and parallel tests — complete
 
 Ensure independent executions do not share mutable state.
 
@@ -1420,6 +1420,10 @@ Justification
 Test runners execute tests in parallel.
 
 A global mutable attempt history would produce corrupted diagnostics and race conditions.
+
+Execution state and reports are instance-scoped, and the test suite now
+runs two independent executions concurrently to verify that their
+attempt counters and convergence results remain isolated.
 
 # 49. Configuration hierarchy — pending
 
