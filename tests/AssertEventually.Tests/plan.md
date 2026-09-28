@@ -1389,7 +1389,7 @@ Deferred until the execution semantics and framework integration
 projects are stable; no mutation-testing tool is added to the product
 or test dependencies yet.
 
-# 47. Performance tests — pending
+# 47. Performance tests — complete
 
 Add benchmarks for:
 
@@ -1403,6 +1403,11 @@ Justification
 Most successful eventual assertions should finish quickly.
 
 The library must have negligible overhead compared with the system being observed.
+
+`benchmarks/AssertEventually.Benchmarks` now provides BenchmarkDotNet
+coverage for immediate success and bounded diagnostic-history
+executions. Benchmarks are kept outside the product and test projects
+and are not run as part of ordinary unit-test validation.
 
 # 48. Thread-safety and parallel tests — pending
 
