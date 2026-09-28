@@ -189,6 +189,7 @@ namespace AssertEventually.Tests
             Assert.Contains("AssertionFailure", text);
             Assert.Contains("EqualException", text);
             Assert.Contains("attempt(s) omitted", text);
+            Assert.NotEmpty(exception.Report.TimelineSegments);
         }
 
         [Fact]
@@ -231,11 +232,10 @@ namespace AssertEventually.Tests
         [Fact]
         public async Task Applies_report_value_limits_and_redaction()
         {
-            var exception = await Assert.ThrowsAsync<EventuallyTimeoutException>(() =>
-                AssertEventually
-                    .That<string>(value => Assert.Equal("ready", value))
-                    .For(() => "token=secret")
-                    .Within(TimeSpan.FromMilliseconds(150)));
+            var execution = AssertEventually
+                .That<string>(value => Assert.Equal("token=secret", value))
+                .For(() => "token=secret");
+            await execution.Within(TimeSpan.FromMilliseconds(150));
 
             var options = new EventuallyReportFormattingOptions
             {
@@ -243,7 +243,7 @@ namespace AssertEventually.Tests
                 Redact = value => value.Replace("secret", "[redacted]")
             };
 
-            var text = EventuallyReportFormatter.Format(exception.Report, options);
+            var text = EventuallyReportFormatter.Format(execution.Report!, options);
 
             Assert.Contains("token=[r...", text);
             Assert.DoesNotContain("secret", text);

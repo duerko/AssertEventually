@@ -121,6 +121,10 @@ is rendered.
 Reports group repeated exception type/message pairs and expose their
 counts and first/last occurrence times through `ExceptionGroups`.
 
+Human-readable reports summarize equivalent timeline entries into
+segments; the complete retained attempt list remains available through
+the structured report.
+
 Both synchronous observations and asynchronous assertions are supported:
 
 ```csharp

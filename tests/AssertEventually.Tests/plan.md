@@ -917,7 +917,7 @@ Repeated transient failures are common in eventual-consistency scenarios. Groupi
 
 ---
 
-# 28. Timeline summarization
+# 28. Timeline summarization — complete
 
 Do not blindly display every polling attempt in the human report.
 

@@ -23,25 +23,13 @@ public static class EventuallyReportFormatter
         builder.AppendLine();
         builder.AppendLine("Timeline:");
 
-        foreach (var attempt in report.Attempts)
+        foreach (var segment in report.TimelineSegments)
         {
             builder.AppendLine(
-                $"  {attempt.Elapsed}  {attempt.Kind}");
-
-            if (attempt.Exception is not null)
-            {
-                builder.AppendLine(
-                    $"         {attempt.Exception.GetType().Name}: " +
-                    (options ?? new EventuallyReportFormattingOptions())
-                        .Format(attempt.Exception.Message));
-                builder.AppendLine(
-                    $"         Observed: {formatter.Format(attempt.ObservedValue)}");
-            }
-            else
-            {
-                builder.AppendLine(
-                    $"         {formatter.Format(attempt.ObservedValue)}");
-            }
+                $"  {segment.FirstElapsed} - {segment.LastElapsed} " +
+                $"{segment.Kind} x {segment.Count}");
+            builder.AppendLine(
+                $"         {formatter.Format(segment.Label)}");
         }
 
         if (report.OmittedAttemptCount > 0)
