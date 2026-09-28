@@ -1425,7 +1425,7 @@ Execution state and reports are instance-scoped, and the test suite now
 runs two independent executions concurrently to verify that their
 attempt counters and convergence results remain isolated.
 
-# 49. Configuration hierarchy — pending
+# 49. Configuration hierarchy — complete
 
 Eventually support:
 
@@ -1442,6 +1442,11 @@ Justification
 Global configuration is dangerous in parallel test execution and makes tests order-dependent.
 
 Prefer immutable options.
+
+The implementation uses immutable init-only options as the call-level
+defaults, fluent execution overrides for execution-specific polling,
+and `Within(..., options)` for the final per-test configuration. No
+global mutable configuration is introduced.
 
 # 50. API evolution — deferred
 

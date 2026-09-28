@@ -137,6 +137,12 @@ When both descriptions are supplied, the report combines them as
 
 ## Polling and cancellation
 
+Configuration follows a narrow hierarchy: `EventuallyOptions` supplies
+library defaults for a call, fluent execution methods such as
+`PollEvery(...)` override execution-specific values, and the options
+passed to `Within(...)` provide the final per-test settings. There is
+no global mutable configuration, so parallel tests remain isolated.
+
 Timeouts are measured with a monotonic stopwatch, so system clock
 adjustments cannot extend or prematurely end a convergence window.
 
