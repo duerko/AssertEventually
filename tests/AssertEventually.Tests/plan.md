@@ -1264,7 +1264,7 @@ background workers.
 
 These examples demonstrate that the library isn't merely a retry helper. It is designed around real distributed-system consistency boundaries.
 
-# 41. Explicitly explain the difference from retry libraries — pending
+# 41. Explicitly explain the difference from retry libraries — complete
 
 README should say:
 
@@ -1282,6 +1282,10 @@ Justification
 This is one of the most important positioning decisions.
 
 The library should not be confused with Polly or test-runner retry functionality.
+
+The README now explicitly distinguishes repeated observation from
+rerunning an operation, and states that the state-changing operation
+should happen once.
 
 # 42. Explain the difference from test retries — pending
 

@@ -60,6 +60,13 @@ The same shape works for an indexed document or queued job: trigger
 the operation once, then observe the search result or job status until
 the assertion passes.
 
+## Not a generic retry library
+
+A retry library says, “run this operation again if it fails.”
+AssertEventually says, “observe this system repeatedly until it reaches
+the expected state.” The operation that changes the system should happen
+once; the observation and assertion are what repeat.
+
 The public entry point intentionally uses the fluent
 `AssertEventually.That(...)` form. When an explicit type reference is
 needed, use `global::AssertEventually.AssertEventually`; retaining this
