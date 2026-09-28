@@ -1,5 +1,10 @@
 # AssertEventually
 
+> Assertions for systems that become correct eventually.
+
+[![NuGet](https://img.shields.io/nuget/v/AssertEventually.svg)](https://www.nuget.org/packages/AssertEventually/)
+[![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+
 AssertEventually is a .NET testing library for eventual consistency.
 
 It is designed for tests where the intermediate state of a system
@@ -8,9 +13,13 @@ expected state within a given amount of time.
 
 The packages target `net8.0` as the supported baseline.
 
+## Install
+
 Install `AssertEventually` for the core API, plus the framework adapter
 package you use: `AssertEventually.Xunit`, `AssertEventually.NUnit`,
 `AssertEventually.MSTest`, or `AssertEventually.TUnit`.
+
+## Quick start
 
 Failures and exceptions during the observation period are treated
 as intermediate observations. The test only fails if the expected
@@ -32,6 +41,8 @@ Each attempt is classified as an observation exception, assertion
 failure, or success, and includes the observed value when one was
 available. Reports can format observed values through the
 `IEventuallyValueFormatter` abstraction.
+
+## Diagnostics
 
 Recorded history is bounded by default. Pass
 `EventuallyOptions.MaxRecordedAttempts` to control the limit; reports

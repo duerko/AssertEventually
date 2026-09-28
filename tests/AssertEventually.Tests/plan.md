@@ -1153,7 +1153,7 @@ Justification
 
 This behavior is unusual enough that users must not have to infer it from implementation details.
 
-# 38. README design — pending
+# 38. README design — complete
 
 Make the README visually polished.
 
@@ -1185,6 +1185,10 @@ Justification
 GitHub visitors need to understand the project in seconds.
 
 The API itself is the strongest marketing material.
+
+The README now opens with a concise value proposition, NuGet/license
+badges, dedicated installation and quick-start sections, and a
+diagnostics section before the deeper integration details.
 
 # 39. README sections — pending
 
