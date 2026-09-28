@@ -439,7 +439,7 @@ A timeout is a duration, so elapsed-duration measurement should use a monotonic 
 
 ---
 
-# 10. Cancellation
+# 10. Cancellation — complete
 
 Support:
 

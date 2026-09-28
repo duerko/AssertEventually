@@ -40,6 +40,18 @@ await AssertEventually
 Timeouts are measured with a monotonic stopwatch, so system clock
 adjustments cannot extend or prematurely end a convergence window.
 
+Polling can be canceled independently of the timeout:
+
+```csharp
+await AssertEventually
+    .That<int>(value => Assert.Equal(42, value))
+    .For(() => GetValue())
+    .WithCancellation(cancellationToken)
+    .Within(TimeSpan.FromSeconds(5));
+```
+
+Cancellation stops polling and propagates `OperationCanceledException`.
+
 Both synchronous observations and asynchronous assertions are supported:
 
 ```csharp

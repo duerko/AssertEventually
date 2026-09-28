@@ -4,6 +4,7 @@ public sealed class EventuallyExecution<T>
 {
     private readonly Func<T, Task> _assertion;
     private readonly Func<Task<T>> _observation;
+    private CancellationToken _cancellationToken;
 
     public EventuallyExecutionReport? Report { get; private set; }
 
@@ -13,6 +14,13 @@ public sealed class EventuallyExecution<T>
             throw new ArgumentOutOfRangeException(nameof(interval), "Polling interval must be positive.");
 
         _pollInterval = interval;
+        return this;
+    }
+
+    public EventuallyExecution<T> WithCancellation(
+        CancellationToken cancellationToken)
+    {
+        _cancellationToken = cancellationToken;
         return this;
     }
 
@@ -49,6 +57,8 @@ public sealed class EventuallyExecution<T>
                 "PollInterval must be positive.");
         }
 
+        _cancellationToken.ThrowIfCancellationRequested();
+
         var stopwatch = System.Diagnostics.Stopwatch.StartNew();
         var attempts = new List<EventuallyAttempt>();
         var omittedAttemptCount = 0;
@@ -57,6 +67,7 @@ public sealed class EventuallyExecution<T>
 
         while (stopwatch.Elapsed < timeout)
         {
+            _cancellationToken.ThrowIfCancellationRequested();
             attemptNumber++;
             var attemptStopwatch = System.Diagnostics.Stopwatch.StartNew();
             T? value = default;
@@ -64,6 +75,10 @@ public sealed class EventuallyExecution<T>
             try
             {
                 value = await _observation();
+            }
+            catch (OperationCanceledException) when (_cancellationToken.IsCancellationRequested)
+            {
+                throw;
             }
             catch (Exception ex)
             {
@@ -104,6 +119,10 @@ public sealed class EventuallyExecution<T>
                     omittedAttemptCount);
                 return;
             }
+            catch (OperationCanceledException) when (_cancellationToken.IsCancellationRequested)
+            {
+                throw;
+            }
             catch (Exception ex)
             {
                 lastException = ex;
@@ -126,7 +145,8 @@ public sealed class EventuallyExecution<T>
                 break;
 
             await Task.Delay(
-                remaining < pollInterval ? remaining : pollInterval);
+                remaining < pollInterval ? remaining : pollInterval,
+                _cancellationToken);
         }
 
         var report = CreateReport(

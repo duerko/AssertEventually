@@ -198,5 +198,20 @@ namespace AssertEventually.Tests
 
             Assert.Equal(2, attempts);
         }
+
+        [Fact]
+        public async Task Cancellation_stops_polling_without_becoming_a_failure()
+        {
+            using var cancellation = new CancellationTokenSource();
+            cancellation.CancelAfter(TimeSpan.FromMilliseconds(25));
+
+            await Assert.ThrowsAnyAsync<OperationCanceledException>(() =>
+                AssertEventually
+                    .That<int>(value => Assert.Equal(42, value))
+                    .For(() => 1)
+                    .PollEvery(TimeSpan.FromSeconds(1))
+                    .WithCancellation(cancellation.Token)
+                    .Within(TimeSpan.FromSeconds(5)));
+        }
     }
 }
