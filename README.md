@@ -8,6 +8,10 @@ expected state within a given amount of time.
 
 The packages target `net8.0` as the supported baseline.
 
+Install `AssertEventually` for the core API, plus the framework adapter
+package you use: `AssertEventually.Xunit`, `AssertEventually.NUnit`,
+`AssertEventually.MSTest`, or `AssertEventually.TUnit`.
+
 Failures and exceptions during the observation period are treated
 as intermediate observations. The test only fails if the expected
 condition is not eventually met.

@@ -1084,7 +1084,7 @@ All library, adapter, and core test projects target `net8.0`, establishing
 the planned modern baseline while retaining compatibility with current
 long-term-support .NET tooling. CI remains deferred under sections 44–45.
 
-# 35. NuGet package design — pending
+# 35. NuGet package design — complete
 
 Publish:
 
@@ -1105,6 +1105,12 @@ Justification
 Users should install only the framework integration they need.
 
 A base package should remain lightweight.
+
+The repository has one lightweight core package and one package per
+supported framework adapter. Reporting remains in the core package
+because its models and renderers are useful to every adapter; a
+separate reporting package is deferred until that surface warrants
+independent versioning.
 
 # 36. Package metadata — pending
 
