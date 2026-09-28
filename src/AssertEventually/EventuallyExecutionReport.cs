@@ -33,4 +33,21 @@ public sealed class EventuallyExecutionReport
     public object? LastObservedValue => LastAttempt?.ObservedValue;
 
     public Exception? LastException => LastAttempt?.Exception;
+
+    public IReadOnlyList<EventuallyExceptionGroup> ExceptionGroups =>
+        Attempts
+            .Where(attempt => attempt.Exception is not null)
+            .GroupBy(attempt => new
+            {
+                Type = attempt.Exception!.GetType().FullName
+                    ?? attempt.Exception.GetType().Name,
+                attempt.Exception.Message
+            })
+            .Select(group => new EventuallyExceptionGroup(
+                group.Key.Type,
+                group.Key.Message,
+                group.Count(),
+                group.First().Elapsed,
+                group.Last().Elapsed))
+            .ToArray();
 }

@@ -886,7 +886,7 @@ A debugging library must not accidentally create a security/data-leak mechanism.
 
 ---
 
-# 27. Exception grouping
+# 27. Exception grouping — complete
 
 Group repeated identical exception types/messages.
 

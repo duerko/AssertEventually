@@ -118,6 +118,9 @@ Built-in formatters accept `EventuallyReportFormattingOptions` to
 limit diagnostic string length and redact sensitive content before it
 is rendered.
 
+Reports group repeated exception type/message pairs and expose their
+counts and first/last occurrence times through `ExceptionGroups`.
+
 Both synchronous observations and asynchronous assertions are supported:
 
 ```csharp

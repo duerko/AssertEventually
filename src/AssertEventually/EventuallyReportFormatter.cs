@@ -50,6 +50,18 @@ public static class EventuallyReportFormatter
                 $"  ... {report.OmittedAttemptCount} attempt(s) omitted");
         }
 
+        if (report.ExceptionGroups.Count > 0)
+        {
+            builder.AppendLine();
+            builder.AppendLine("Exception groups:");
+            foreach (var group in report.ExceptionGroups)
+            {
+                builder.AppendLine(
+                    $"  {group.Type} occurred {group.Count} time(s), " +
+                    $"first: {group.FirstElapsed}, last: {group.LastElapsed}");
+            }
+        }
+
         return builder.ToString().TrimEnd();
     }
 }

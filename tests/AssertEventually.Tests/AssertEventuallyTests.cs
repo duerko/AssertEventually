@@ -276,6 +276,7 @@ namespace AssertEventually.Tests
 
             Assert.Equal(2, exception.Report.Attempts.Count);
             Assert.True(exception.Report.OmittedAttemptCount > 0);
+            Assert.NotEmpty(exception.Report.ExceptionGroups);
             Assert.Equal(
                 exception.Report.AttemptCount,
                 exception.Report.Attempts[^1].Number);
