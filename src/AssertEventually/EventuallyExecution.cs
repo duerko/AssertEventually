@@ -74,7 +74,7 @@ public sealed class EventuallyExecution<T>
 
             try
             {
-                value = await _observation();
+                value = await _observation().ConfigureAwait(false);
             }
             catch (OperationCanceledException) when (_cancellationToken.IsCancellationRequested)
             {
@@ -99,7 +99,7 @@ public sealed class EventuallyExecution<T>
 
             try
             {
-                await _assertion(value);
+                await _assertion(value).ConfigureAwait(false);
 
                 RecordAttempt(
                     attempts,
@@ -146,7 +146,7 @@ public sealed class EventuallyExecution<T>
 
             await Task.Delay(
                 remaining < pollInterval ? remaining : pollInterval,
-                _cancellationToken);
+                _cancellationToken).ConfigureAwait(false);
         }
 
         var report = CreateReport(

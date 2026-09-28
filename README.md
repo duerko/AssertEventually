@@ -52,6 +52,9 @@ await AssertEventually
 
 Cancellation stops polling and propagates `OperationCanceledException`.
 
+The core loop uses asynchronous observation, assertion, and delay
+operations without blocking waits or sleeps.
+
 Both synchronous observations and asynchronous assertions are supported:
 
 ```csharp

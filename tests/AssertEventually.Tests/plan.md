@@ -463,7 +463,7 @@ Cancellation means "stop this work", not "the eventual condition failed."
 
 ---
 
-# 11. Async correctness
+# 11. Async correctness — complete
 
 Ensure:
 
