@@ -62,7 +62,7 @@ The library must optimize for these scenarios rather than becoming a generic ret
 
 ---
 
-# 1. Repository architecture — complete
+# 1. Repository architecture — pending
 
 Create a multi-project solution.
 
@@ -943,7 +943,7 @@ Justification
 
 This produces a much more useful failure experience while preserving complete information for debugging.
 
-29. Description capture
+# 29. Description capture — pending
 
 Allow optional explicit descriptions:
 
@@ -965,7 +965,7 @@ Lambda expressions cannot always be represented meaningfully at runtime.
 
 Explicit descriptions make reports dramatically better for CI failures.
 
-30. Do not attempt source-code extraction initially
+# 30. Do not attempt source-code extraction initially — deferred
 
 Do not build a Roslyn-based system to recover the source expression.
 
@@ -977,7 +977,7 @@ FluentAssertions already demonstrates how valuable subject identification can be
 
 Add this only if real-world usage demonstrates that descriptions are insufficient.
 
-31. FluentAssertions compatibility
+# 31. FluentAssertions compatibility — pending
 
 Do not create a FluentAssertions integration package initially.
 
@@ -996,7 +996,7 @@ FluentAssertions already provides rich assertion exceptions and supports multipl
 
 AssertEventually should wrap existing assertion ecosystems rather than compete with them.
 
-32. Test the semantics heavily
+# 32. Test the semantics heavily — pending
 
 Build deterministic tests using fake clocks and fake observations where possible.
 
@@ -1031,7 +1031,7 @@ The difficult bugs are temporal edge cases.
 
 A fake clock and deterministic scheduler prevent tests from becoming flaky themselves.
 
-33. Integration-test the framework integrations
+# 33. Integration-test the framework integrations — pending
 
 For every supported framework, create actual test projects that run under the real runner.
 
@@ -1049,7 +1049,7 @@ A framework adapter that compiles but doesn't behave correctly inside the real r
 
 MTP/VSTest behavior differs across frameworks, so real runner tests are necessary.
 
-34. Package targeting
+# 34. Package targeting — pending
 
 Target a modern baseline initially, preferably:
 
@@ -1063,7 +1063,7 @@ Modern .NET test platforms are moving toward Microsoft.Testing.Platform and curr
 
 Do not sacrifice API quality and maintainability merely to support every historical .NET runtime.
 
-35. NuGet package design
+# 35. NuGet package design — pending
 
 Publish:
 
@@ -1085,7 +1085,7 @@ Users should install only the framework integration they need.
 
 A base package should remain lightweight.
 
-36. Package metadata
+# 36. Package metadata — pending
 
 Configure:
 
@@ -1104,7 +1104,7 @@ Justification
 
 For an open-source library, NuGet is part of the product surface. Good metadata improves discoverability and makes the package trustworthy.
 
-37. Analyzer/source documentation
+# 37. Analyzer/source documentation — pending
 
 Document all public APIs with XML documentation.
 
@@ -1116,7 +1116,7 @@ Justification
 
 This behavior is unusual enough that users must not have to infer it from implementation details.
 
-38. README design
+# 38. README design — pending
 
 Make the README visually polished.
 
@@ -1149,7 +1149,7 @@ GitHub visitors need to understand the project in seconds.
 
 The API itself is the strongest marketing material.
 
-39. README sections
+# 39. README sections — pending
 
 Include:
 
@@ -1177,7 +1177,7 @@ How does it differ from retries?
 How do I use it?
 What happens when it fails?
 Does it work with my framework?
-40. Real-world README examples
+# 40. Real-world README examples — pending
 
 Include examples for:
 
@@ -1214,7 +1214,7 @@ Justification
 
 These examples demonstrate that the library isn't merely a retry helper. It is designed around real distributed-system consistency boundaries.
 
-41. Explicitly explain the difference from retry libraries
+# 41. Explicitly explain the difference from retry libraries — pending
 
 README should say:
 
@@ -1233,7 +1233,7 @@ This is one of the most important positioning decisions.
 
 The library should not be confused with Polly or test-runner retry functionality.
 
-42. Explain the difference from test retries
+# 42. Explain the difference from test retries — pending
 
 Include:
 
@@ -1258,7 +1258,7 @@ Test retries can repeat setup and side effects, potentially creating duplicate m
 
 AssertEventually keeps the scenario intact and repeatedly observes the same system state.
 
-43. Add a "When not to use AssertEventually" section
+# 43. Add a "When not to use AssertEventually" section — pending
 
 Examples:
 
@@ -1273,7 +1273,7 @@ A credible open-source project should clearly communicate its boundaries.
 
 This also discourages users from using eventual consistency as a blanket solution for flaky tests.
 
-44. CI pipeline
+# 44. CI pipeline — deferred
 
 Set up GitHub Actions for:
 
@@ -1290,7 +1290,7 @@ Justification
 
 The library's core value proposition is reliability. Its own CI must demonstrate that reliability.
 
-45. Multi-framework CI matrix
+# 45. Multi-framework CI matrix — deferred
 
 Run integration tests against:
 
@@ -1307,7 +1307,7 @@ Framework integrations are independently version-sensitive.
 
 A matrix catches breakage that a single test project cannot.
 
-46. Mutation/property testing consideration
+# 46. Mutation/property testing consideration — pending
 
 After the initial implementation is stable, consider mutation testing for the execution engine.
 
@@ -1324,7 +1324,7 @@ A retry/convergence engine can appear well tested while having subtle semantic g
 
 Mutation testing verifies that the tests actually protect the algorithm.
 
-47. Performance tests
+# 47. Performance tests — pending
 
 Add benchmarks for:
 
@@ -1339,7 +1339,7 @@ Most successful eventual assertions should finish quickly.
 
 The library must have negligible overhead compared with the system being observed.
 
-48. Thread-safety and parallel tests
+# 48. Thread-safety and parallel tests — pending
 
 Ensure independent executions do not share mutable state.
 
@@ -1351,7 +1351,7 @@ Test runners execute tests in parallel.
 
 A global mutable attempt history would produce corrupted diagnostics and race conditions.
 
-49. Configuration hierarchy
+# 49. Configuration hierarchy — pending
 
 Eventually support:
 
@@ -1369,7 +1369,7 @@ Global configuration is dangerous in parallel test execution and makes tests ord
 
 Prefer immutable options.
 
-50. API evolution
+# 50. API evolution — deferred
 
 Do not add Given until real usage demonstrates its value.
 
@@ -1393,7 +1393,7 @@ That → For → Within
 
 before expanding the language.
 
-51. Future features — explicitly defer
+# 51. Future features — explicitly defer — complete
 
 Do NOT implement initially:
 
@@ -1416,7 +1416,7 @@ These are all potentially useful, but they turn a focused library into a platfor
 
 Build the generic primitive first.
 
-52. Documentation for failure semantics
+# 52. Documentation for failure semantics — pending
 
 Create a dedicated document:
 
@@ -1439,7 +1439,7 @@ The most important feature of AssertEventually is not its syntax. It is its sema
 
 Users need a canonical specification to know exactly what the library guarantees.
 
-53. README visual polish
+# 53. README visual polish — pending
 
 Use:
 
@@ -1469,7 +1469,7 @@ The GitHub repository is the project's storefront.
 
 A developer should understand the problem, API, and value proposition without opening another document.
 
-54. README architecture diagram
+# 54. README architecture diagram — pending
 
 Use something like:
 
@@ -1498,7 +1498,7 @@ Justification
 
 The architecture is simple enough to explain visually, and the diagram reinforces the project's core mental model.
 
-55. README failure example
+# 55. README failure example — pending
 
 Include a realistic failure:
 
@@ -1531,7 +1531,7 @@ Justification
 
 This is the feature that will make someone choose this library rather than writing their own loop.
 
-56. Package quality
+# 56. Package quality — pending
 
 Before the first public release:
 
@@ -1551,7 +1551,7 @@ Justification
 
 A library intended for broad open-source adoption needs production-grade packaging from the beginning.
 
-57. Version 0.1 acceptance criteria
+# 57. Version 0.1 acceptance criteria — pending
 
 The implementation is ready for 0.1 only when all of these work:
 
@@ -1578,7 +1578,7 @@ produce framework-native diagnostics/artifacts where possible
 have a polished README
 have real integration tests for every framework
 have CI covering the supported matrix
-58. Most important implementation principle
+# 58. Most important implementation principle — complete
 
 Do not optimize for feature count.
 
@@ -1711,13 +1711,13 @@ before the API is public and the type name is locked in by adoption.
 
 ---
 
-# 63. Reconcile "— complete" status markers with actual repository state — pending
+# 63. Reconcile "— complete" status markers with actual repository state — complete
 
-Sections 1–28 above use a "— complete" suffix; sections 29–58 (this
-plan's original, restored middle section) intentionally carry no
-status suffix yet. Before continuing to add new sections, audit the
-existing ones against what is actually in the repository. Confirmed
-gaps as of this audit:
+Sections 1–28 above originally used a "— complete" suffix, while
+sections 29–58 had no status suffix. The existing sections were audited
+against the repository and now carry explicit `complete`, `pending`, or
+`deferred` markers. Confirmed gaps and intentional deferrals as of this
+audit:
 
 * **Section 1** (repository architecture, marked complete): `docs/`,
   `samples/`, `CHANGELOG.md`, `CONTRIBUTING.md`,
@@ -1725,9 +1725,9 @@ gaps as of this audit:
   (`AssertEventually.Xunit.Tests`, `AssertEventually.NUnit.Tests`,
   `AssertEventually.MSTest.Tests`, `AssertEventually.TUnit.Tests`)
   don't exist.
-* **Sections 19–22** (framework integrations, marked complete): none
-  of the four adapters use `TestContext`/artifact attachment as
-  specified — see section 59.
+* **Sections 19–22** (framework integrations): the missing native
+  artifact attachment was implemented by section 59, but real
+  framework-runner integration tests remain covered by section 33.
 * **Section 33** (integration-test the framework integrations): no
   test project runs any adapter under NUnit's, MSTest's, or TUnit's
   real runner at all (only xUnit has a test project, and it only
