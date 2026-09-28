@@ -1557,7 +1557,7 @@ headings, and horizontal conceptual sections without adding a CI badge
 while CI remains deferred. The architecture diagram and failure
 example are tracked independently in sections 54–55.
 
-# 54. README architecture diagram — pending
+# 54. README architecture diagram — complete
 
 Use something like:
 
@@ -1585,6 +1585,9 @@ Use something like:
 Justification
 
 The architecture is simple enough to explain visually, and the diagram reinforces the project's core mental model.
+
+The README includes a Mermaid diagram showing the fluent entry point,
+polling engine, success path, and timeout report path.
 
 # 55. README failure example — pending
 

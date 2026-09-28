@@ -92,6 +92,15 @@ name avoids breaking the established API.
 The complete execution contract is documented in
 [`docs/semantics.md`](docs/semantics.md).
 
+```mermaid
+flowchart TD
+    A[That assertion] --> B[For observation]
+    B --> C[Within timeout]
+    C --> D[Polling engine]
+    D -->|assertion passes| E[PASS]
+    D -->|timeout| F[Report and exception]
+```
+
 The core execution model records an ordered convergence timeline. Each
 attempt includes its elapsed time and any observation or assertion
 exception. Successful executions expose this through
