@@ -25,10 +25,19 @@ Failures and exceptions during the observation period are treated
 as intermediate observations. The test only fails if the expected
 condition is not eventually met.
 
+## Why AssertEventually
+
+Use it when a system is expected to converge after asynchronous work,
+replication, message delivery, cache invalidation, or background
+processing. The same test scenario is observed repeatedly until it
+passes or the bounded convergence window expires.
+
 The public entry point intentionally uses the fluent
 `AssertEventually.That(...)` form. When an explicit type reference is
 needed, use `global::AssertEventually.AssertEventually`; retaining this
 name avoids breaking the established API.
+
+## Execution semantics
 
 The core execution model records an ordered convergence timeline. Each
 attempt includes its elapsed time and any observation or assertion
@@ -76,6 +85,8 @@ await AssertEventually
 When both descriptions are supplied, the report combines them as
 `assertion; observation`.
 
+## Polling and cancellation
+
 Timeouts are measured with a monotonic stopwatch, so system clock
 adjustments cannot extend or prematurely end a convergence window.
 
@@ -121,6 +132,8 @@ For machine-readable diagnostics, use
 `EventuallyJsonReportFormatter.Format(report)`. It emits explicit
 metadata and formatted values rather than attempting to serialize
 arbitrary observed objects or exception graphs.
+
+## Framework integrations
 
 Framework integrations are separate packages:
 `AssertEventually.Xunit`, `AssertEventually.NUnit`,
@@ -172,6 +185,8 @@ is rendered.
 The default value formatter expands bounded public object properties
 and collection elements, while limiting depth and preserving custom
 `IEventuallyValueFormatter` implementations.
+
+## Reports and artifacts
 
 Reports group repeated exception type/message pairs and expose their
 counts and first/last occurrence times through `ExceptionGroups`.

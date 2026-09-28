@@ -1190,7 +1190,7 @@ The README now opens with a concise value proposition, NuGet/license
 badges, dedicated installation and quick-start sections, and a
 diagnostics section before the deeper integration details.
 
-# 39. README sections — pending
+# 39. README sections — complete
 
 Include:
 
@@ -1218,6 +1218,11 @@ How does it differ from retries?
 How do I use it?
 What happens when it fails?
 Does it work with my framework?
+
+The README now provides dedicated sections for the product rationale,
+execution semantics, polling/cancellation, framework integrations, and
+reports/artifacts. Positioning boundaries and detailed real-world
+examples remain tracked by sections 40–43.
 # 40. Real-world README examples — pending
 
 Include examples for:
