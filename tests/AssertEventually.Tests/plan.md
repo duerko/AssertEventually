@@ -1,6 +1,6 @@
 # AssertEventually — Full Library Implementation Plan
 
-## 0. Product definition
+## 0. Product definition — complete
 
 Build `AssertEventually`, a .NET testing library for testing **eventual consistency and asynchronous state convergence**.
 
@@ -62,7 +62,7 @@ The library must optimize for these scenarios rather than becoming a generic ret
 
 ---
 
-# 1. Repository architecture
+# 1. Repository architecture — complete
 
 Create a multi-project solution.
 
@@ -162,7 +162,7 @@ Do not add dozens of overloads immediately. Prefer a small set of carefully desi
 
 ---
 
-# 3. Define the execution semantics precisely
+# 3. Define the execution semantics precisely — complete
 
 The execution model must be:
 
@@ -206,7 +206,7 @@ Do not use a conventional test retry abstraction as the underlying semantic mode
 
 ---
 
-# 4. Exception semantics
+# 4. Exception semantics — complete
 
 During `For`/`That` execution:
 
@@ -237,7 +237,7 @@ However, failures during `Given`—if `Given` is added later—must be treated d
 
 ---
 
-# 5. Timeout behavior
+# 5. Timeout behavior — complete
 
 When the timeout expires:
 
