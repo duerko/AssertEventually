@@ -79,6 +79,12 @@ For machine-readable diagnostics, use
 metadata and formatted values rather than attempting to serialize
 arbitrary observed objects or exception graphs.
 
+Framework integrations are separate packages:
+`AssertEventually.Xunit`, `AssertEventually.NUnit`,
+`AssertEventually.MSTest`, and `AssertEventually.TUnit`. Each adapter
+depends on the core package, while the core remains test-framework
+neutral.
+
 Both synchronous observations and asynchronous assertions are supported:
 
 ```csharp

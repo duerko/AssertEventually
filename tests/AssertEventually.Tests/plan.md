@@ -660,7 +660,7 @@ Do not make JSON the primary user experience; it is a machine-readable companion
 
 ---
 
-# 18. Framework integration architecture
+# 18. Framework integration architecture — complete
 
 Create separate packages:
 
