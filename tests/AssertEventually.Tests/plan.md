@@ -773,7 +773,7 @@ TUnit is now one of the .NET frameworks explicitly listed by Microsoft, and it i
 
 ---
 
-# 23. Microsoft.Testing.Platform consideration
+# 23. Microsoft.Testing.Platform consideration — complete
 
 Investigate whether a dedicated MTP integration package is useful in addition to framework-specific packages.
 

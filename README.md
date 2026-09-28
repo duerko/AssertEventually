@@ -101,6 +101,10 @@ The TUnit adapter provides `TUnitEventually.AssertAsync(...)` and
 surfaces timeout diagnostics as a TUnit test failure while retaining
 the original timeout exception as the inner exception.
 
+Microsoft.Testing.Platform can consume the human-readable or JSON
+report through a future runner integration, but it is intentionally
+not a dependency of the core library or its framework adapters.
+
 Both synchronous observations and asynchronous assertions are supported:
 
 ```csharp
