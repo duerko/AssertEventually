@@ -94,6 +94,9 @@ The NUnit adapter provides the equivalent
 `NUnitEventually.AssertAsync(...)` wrapper and sends the formatted
 timeline through NUnit's assertion output.
 
+The MSTest adapter provides `MSTestEventually.AssertAsync(...)` and
+routes timeout diagnostics through MSTest's native assertion output.
+
 Both synchronous observations and asynchronous assertions are supported:
 
 ```csharp

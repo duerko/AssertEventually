@@ -732,7 +732,7 @@ NUnit already has explicit concepts for output and test attachments, so AssertEv
 
 ---
 
-# 21. MSTest integration
+# 21. MSTest integration — complete
 
 Integrate with MSTest `TestContext`.
 
