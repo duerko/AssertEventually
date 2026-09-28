@@ -404,5 +404,64 @@ namespace AssertEventually.Tests
                     .WithCancellation(cancellation.Token)
                     .Within(TimeSpan.FromSeconds(5)));
         }
+
+        [Theory]
+        [InlineData(0)]
+        [InlineData(-1)]
+        public async Task Rejects_non_positive_timeouts(int milliseconds)
+        {
+            await Assert.ThrowsAsync<ArgumentOutOfRangeException>(() =>
+                    AssertEventually
+                        .That<int>(value => Assert.Equal(1, value))
+                        .For(() => 1)
+                        .Within(TimeSpan.FromMilliseconds(milliseconds)));
+        }
+
+        [Fact]
+        public async Task Cancellation_during_observation_propagates()
+        {
+            using var cancellation = new CancellationTokenSource();
+            var observationStarted = new TaskCompletionSource(
+                    TaskCreationOptions.RunContinuationsAsynchronously);
+            var releaseObservation = new TaskCompletionSource(
+                    TaskCreationOptions.RunContinuationsAsynchronously);
+
+            var execution = AssertEventually
+                    .That<int>(value => Assert.Equal(1, value))
+                    .For(async () =>
+                    {
+                        observationStarted.SetResult();
+                        await releaseObservation.Task;
+                        return 1;
+                    })
+                    .WithCancellation(cancellation.Token);
+
+            var running = execution.Within(TimeSpan.FromSeconds(5));
+            await observationStarted.Task;
+            cancellation.Cancel();
+            releaseObservation.SetResult();
+
+            await Assert.ThrowsAnyAsync<OperationCanceledException>(
+                    () => running);
+        }
+
+        [Fact]
+        public async Task Observation_can_exceed_polling_interval_without_overlapping()
+        {
+            var observations = 0;
+
+            await AssertEventually
+                    .That<int>(value => Assert.Equal(1, value))
+                    .For(async () =>
+                    {
+                        observations++;
+                        await Task.Delay(30);
+                        return 1;
+                    })
+                    .PollEvery(TimeSpan.FromMilliseconds(1))
+                    .Within(TimeSpan.FromSeconds(1));
+
+            Assert.Equal(1, observations);
+        }
     }
 }

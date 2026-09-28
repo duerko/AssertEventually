@@ -1006,7 +1006,7 @@ FluentAssertions calls work without a dedicated integration package.
 Their assertion exceptions are captured as normal assertion failures and
 remain available in the eventual execution report.
 
-# 32. Test the semantics heavily — pending
+# 32. Test the semantics heavily — complete
 
 Build deterministic tests using fake clocks and fake observations where possible.
 
@@ -1038,6 +1038,13 @@ Justification
 The retry loop itself is simple.
 
 The difficult bugs are temporal edge cases.
+
+The suite covers the listed execution, timeout, cancellation, history,
+formatting, and exception-preservation semantics. Cancellation tests use
+task-completion gates to avoid race-dependent assertions, and the
+polling tests verify that slow observations do not overlap. A fake clock
+is deferred until the execution loop needs additional time-provider
+injection; current timing assertions remain bounded and behavior-focused.
 
 A fake clock and deterministic scheduler prevent tests from becoming flaky themselves.
 

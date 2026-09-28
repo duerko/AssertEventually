@@ -79,6 +79,7 @@ public sealed class EventuallyExecution<T>
             try
             {
                 value = await _observation().ConfigureAwait(false);
+                _cancellationToken.ThrowIfCancellationRequested();
             }
             catch (OperationCanceledException) when (_cancellationToken.IsCancellationRequested)
             {
@@ -107,6 +108,7 @@ public sealed class EventuallyExecution<T>
             try
             {
                 await _assertion(value).ConfigureAwait(false);
+                _cancellationToken.ThrowIfCancellationRequested();
 
                 RecordAttempt(
                     attempts,
