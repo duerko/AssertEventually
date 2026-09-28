@@ -501,7 +501,7 @@ This distinction is crucial when diagnosing slow integration tests.
 
 ---
 
-# 13. Assertion duration
+# 13. Assertion duration — complete
 
 Also measure assertion duration.
 

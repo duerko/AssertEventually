@@ -93,12 +93,14 @@ public sealed class EventuallyExecution<T>
                     stopwatch.Elapsed,
                     attemptStopwatch.Elapsed,
                     observationStopwatch.Elapsed,
+                    TimeSpan.Zero,
                     EventuallyAttemptKind.ObservationException,
                     null,
                     ex));
                 goto WaitForNextAttempt;
             }
 
+            var assertionStopwatch = System.Diagnostics.Stopwatch.StartNew();
             try
             {
                 await _assertion(value).ConfigureAwait(false);
@@ -112,6 +114,7 @@ public sealed class EventuallyExecution<T>
                     stopwatch.Elapsed,
                     attemptStopwatch.Elapsed,
                     observationStopwatch.Elapsed,
+                    assertionStopwatch.Elapsed,
                     EventuallyAttemptKind.Success,
                     value,
                     null));
@@ -128,6 +131,7 @@ public sealed class EventuallyExecution<T>
             }
             catch (Exception ex)
             {
+                var assertionDuration = assertionStopwatch.Elapsed;
                 lastException = ex;
                 RecordAttempt(
                     attempts,
@@ -138,6 +142,7 @@ public sealed class EventuallyExecution<T>
                     stopwatch.Elapsed,
                     attemptStopwatch.Elapsed,
                     observationStopwatch.Elapsed,
+                    assertionDuration,
                     EventuallyAttemptKind.AssertionFailure,
                     value,
                     ex));

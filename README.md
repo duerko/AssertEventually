@@ -58,6 +58,10 @@ operations without blocking waits or sleeps.
 Each attempt also records how long its observation took, separately
 from the total attempt duration.
 
+Assertion duration is recorded separately as well, making it possible
+to identify whether convergence is slow because of the system under
+observation or the assertion itself.
+
 Both synchronous observations and asynchronous assertions are supported:
 
 ```csharp

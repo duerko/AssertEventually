@@ -164,6 +164,7 @@ namespace AssertEventually.Tests
             Assert.Equal(2, attempt.ObservedValue);
             Assert.True(attempt.Duration >= TimeSpan.Zero);
             Assert.True(attempt.ObservationDuration >= TimeSpan.Zero);
+            Assert.True(attempt.AssertionDuration >= TimeSpan.Zero);
             Assert.Equal("2", attempt.FormatObservedValue());
         }
 
