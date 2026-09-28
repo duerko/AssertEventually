@@ -73,6 +73,15 @@ AssertEventually keeps one test scenario intact and repeatedly checks
 the changing system state, avoiding duplicate messages, orders, or
 resources.
 
+## When not to use AssertEventually
+
+Prefer a direct assertion for deterministic unit tests or when an
+intermediate failure indicates a real bug. Do not use it when the
+operation is unsafe to repeat, when waiting would hide a deterministic
+failure, or when whole-test retries are intentionally required by the
+test environment. Eventual assertions should describe a real
+convergence boundary, not mask an unrelated flaky test.
+
 The public entry point intentionally uses the fluent
 `AssertEventually.That(...)` form. When an explicit type reference is
 needed, use `global::AssertEventually.AssertEventually`; retaining this

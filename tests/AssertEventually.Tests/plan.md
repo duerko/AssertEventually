@@ -1315,7 +1315,7 @@ AssertEventually keeps the scenario intact and repeatedly observes the same syst
 The README now documents this distinction and calls out the risk of
 duplicating setup or side effects through whole-test retries.
 
-# 43. Add a "When not to use AssertEventually" section — pending
+# 43. Add a "When not to use AssertEventually" section — complete
 
 Examples:
 
@@ -1329,6 +1329,10 @@ Justification
 A credible open-source project should clearly communicate its boundaries.
 
 This also discourages users from using eventual consistency as a blanket solution for flaky tests.
+
+The README now documents deterministic tests, unsafe-to-repeat
+operations, hidden deterministic failures, and cases where whole-test
+retries are the intentional choice.
 
 # 44. CI pipeline — deferred
 
