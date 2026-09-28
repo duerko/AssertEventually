@@ -8,5 +8,11 @@ namespace AssertEventually
         {
             return new EventuallyAssertion<T>(assertion);
         }
+
+        public static EventuallyAssertion<T> That<T>(
+            Func<T, Task> assertion)
+        {
+            return new EventuallyAssertion<T>(assertion);
+        }
     }
 }

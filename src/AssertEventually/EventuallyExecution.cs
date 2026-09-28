@@ -2,13 +2,13 @@ namespace AssertEventually;
 
 public sealed class EventuallyExecution<T>
 {
-    private readonly Action<T> _assertion;
+    private readonly Func<T, Task> _assertion;
     private readonly Func<Task<T>> _observation;
 
     public EventuallyExecutionReport? Report { get; private set; }
 
     internal EventuallyExecution(
-        Action<T> assertion,
+        Func<T, Task> assertion,
         Func<Task<T>> observation)
     {
         _assertion = assertion;
@@ -32,7 +32,7 @@ public sealed class EventuallyExecution<T>
             {
                 var value = await _observation();
 
-                _assertion(value);
+                await _assertion(value);
 
                 attempts.Add(new EventuallyAttempt(
                     attemptNumber,

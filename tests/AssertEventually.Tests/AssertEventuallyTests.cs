@@ -54,6 +54,36 @@ namespace AssertEventually.Tests
                     })
                 .Within(TimeSpan.FromSeconds(1));
         }
+
+        [Fact]
+        public async Task Supports_synchronous_observations()
+        {
+            var attempts = 0;
+
+            await AssertEventually
+                .That<int>(value => Assert.Equal(3, value))
+                .For(() => ++attempts)
+                .Within(TimeSpan.FromSeconds(1));
+        }
+
+        [Fact]
+        public async Task Supports_asynchronous_assertions()
+        {
+            var attempts = 0;
+
+            await AssertEventually
+                .That<int>(async value =>
+                {
+                    await Task.Yield();
+                    Assert.Equal(2, value);
+                })
+                .For(async () =>
+                {
+                    await Task.CompletedTask;
+                    return ++attempts;
+                })
+                .Within(TimeSpan.FromSeconds(1));
+        }
         [Fact]
         public async Task Throws_when_timeout_is_reached()
         {

@@ -16,3 +16,15 @@ exception. Successful executions expose this through
 `EventuallyExecution.Report`; timed-out executions throw
 `EventuallyTimeoutException`, which includes the same report while
 remaining compatible with `TimeoutException` catches.
+
+Both synchronous observations and asynchronous assertions are supported:
+
+```csharp
+await AssertEventually
+    .That<int>(async value =>
+    {
+        await AssertSomethingAsync(value);
+    })
+    .For(() => GetValue())
+    .Within(TimeSpan.FromSeconds(5));
+```
