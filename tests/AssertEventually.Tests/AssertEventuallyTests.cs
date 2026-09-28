@@ -211,6 +211,24 @@ namespace AssertEventually.Tests
         }
 
         [Fact]
+        public async Task Formats_a_standalone_html_report()
+        {
+            var exception = await Assert.ThrowsAsync<EventuallyTimeoutException>(() =>
+                AssertEventually
+                    .That<string>(value => Assert.Equal("ready", value))
+                    .For(() => "<unsafe>")
+                    .Within(TimeSpan.FromMilliseconds(150)));
+
+            var html = EventuallyHtmlReportFormatter.Format(exception.Report);
+
+            Assert.Contains("<!doctype html>", html);
+            Assert.Contains("AssertEventually", html);
+            Assert.Contains("AssertionFailure", html);
+            Assert.Contains("&lt;unsafe&gt;", html);
+            Assert.DoesNotContain("<unsafe>", html);
+        }
+
+        [Fact]
         public async Task xUnit_adapter_surfaces_timeout_diagnostics()
         {
             var exception = await Assert.ThrowsAsync<global::Xunit.Sdk.XunitException>(() =>

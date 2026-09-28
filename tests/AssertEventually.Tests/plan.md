@@ -816,7 +816,7 @@ Do not force all three formats into every test run because this creates unnecess
 
 ---
 
-# 25. HTML report
+# 25. HTML report — complete
 
 Build a polished standalone HTML report.
 

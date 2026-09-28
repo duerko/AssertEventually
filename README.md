@@ -110,6 +110,10 @@ may request text, JSON, or HTML files under an
 `assert-eventually/` directory; generic runner formats remain the
 responsibility of the runner and its existing extensions.
 
+`EventuallyHtmlReportFormatter.Format(report)` produces a standalone
+HTML timeline with escaped diagnostic values, timing metadata, status,
+and omitted-attempt information.
+
 Both synchronous observations and asynchronous assertions are supported:
 
 ```csharp
