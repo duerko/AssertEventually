@@ -90,6 +90,10 @@ accepts the execution timeout, surfaces the core timeline as native
 xUnit failure output, and retains the original timeout exception as
 the inner exception.
 
+The NUnit adapter provides the equivalent
+`NUnitEventually.AssertAsync(...)` wrapper and sends the formatted
+timeline through NUnit's assertion output.
+
 Both synchronous observations and asynchronous assertions are supported:
 
 ```csharp

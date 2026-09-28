@@ -713,7 +713,7 @@ Do not initially attempt to build a custom xUnit test runner.
 
 ---
 
-# 20. NUnit integration
+# 20. NUnit integration — complete
 
 Integrate with NUnit's `TestContext`.
 
