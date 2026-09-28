@@ -70,6 +70,7 @@ public sealed class EventuallyExecution<T>
             _cancellationToken.ThrowIfCancellationRequested();
             attemptNumber++;
             var attemptStopwatch = System.Diagnostics.Stopwatch.StartNew();
+            var observationStopwatch = System.Diagnostics.Stopwatch.StartNew();
             T? value = default;
 
             try
@@ -91,6 +92,7 @@ public sealed class EventuallyExecution<T>
                     attemptNumber,
                     stopwatch.Elapsed,
                     attemptStopwatch.Elapsed,
+                    observationStopwatch.Elapsed,
                     EventuallyAttemptKind.ObservationException,
                     null,
                     ex));
@@ -109,6 +111,7 @@ public sealed class EventuallyExecution<T>
                     attemptNumber,
                     stopwatch.Elapsed,
                     attemptStopwatch.Elapsed,
+                    observationStopwatch.Elapsed,
                     EventuallyAttemptKind.Success,
                     value,
                     null));
@@ -134,6 +137,7 @@ public sealed class EventuallyExecution<T>
                     attemptNumber,
                     stopwatch.Elapsed,
                     attemptStopwatch.Elapsed,
+                    observationStopwatch.Elapsed,
                     EventuallyAttemptKind.AssertionFailure,
                     value,
                     ex));

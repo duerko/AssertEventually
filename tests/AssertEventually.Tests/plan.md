@@ -480,7 +480,7 @@ This library will be heavily used in asynchronous integration tests. Blocking th
 
 ---
 
-# 12. Observation duration
+# 12. Observation duration — complete
 
 Measure how long each observation takes.
 

@@ -4,6 +4,7 @@ public sealed record EventuallyAttempt(
     int Number,
     TimeSpan Elapsed,
     TimeSpan Duration,
+    TimeSpan ObservationDuration,
     EventuallyAttemptKind Kind,
     object? ObservedValue,
     Exception? Exception)

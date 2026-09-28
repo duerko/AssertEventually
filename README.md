@@ -55,6 +55,9 @@ Cancellation stops polling and propagates `OperationCanceledException`.
 The core loop uses asynchronous observation, assertion, and delay
 operations without blocking waits or sleeps.
 
+Each attempt also records how long its observation took, separately
+from the total attempt duration.
+
 Both synchronous observations and asynchronous assertions are supported:
 
 ```csharp
