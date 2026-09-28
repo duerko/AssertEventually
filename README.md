@@ -32,6 +32,34 @@ replication, message delivery, cache invalidation, or background
 processing. The same test scenario is observed repeatedly until it
 passes or the bounded convergence window expires.
 
+### Event-driven processing
+
+```csharp
+await publisher.PublishAsync(new OrderCreated(orderId));
+
+await AssertEventually
+    .That<Order>(order => order.Status.Should().Be(OrderStatus.Processed))
+    .For(() => projection.GetAsync(orderId))
+    .Within(TimeSpan.FromSeconds(10));
+```
+
+### Read replicas
+
+```csharp
+await primary.SaveAsync(entity);
+
+await AssertEventually
+    .That<Entity>(value => value.Should().NotBeNull())
+    .For(() => replica.GetAsync(entity.Id))
+    .Within(TimeSpan.FromSeconds(5));
+```
+
+### Search indexes and background workers
+
+The same shape works for an indexed document or queued job: trigger
+the operation once, then observe the search result or job status until
+the assertion passes.
+
 The public entry point intentionally uses the fluent
 `AssertEventually.That(...)` form. When an explicit type reference is
 needed, use `global::AssertEventually.AssertEventually`; retaining this

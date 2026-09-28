@@ -1223,7 +1223,7 @@ The README now provides dedicated sections for the product rationale,
 execution semantics, polling/cancellation, framework integrations, and
 reports/artifacts. Positioning boundaries and detailed real-world
 examples remain tracked by sections 40–43.
-# 40. Real-world README examples — pending
+# 40. Real-world README examples — complete
 
 Include examples for:
 
@@ -1257,6 +1257,10 @@ await AssertEventually
     .For(() => jobs.GetAsync(jobId))
     .Within(30.Seconds());
 Justification
+
+The README includes event-driven processing and read-replica examples,
+and explains how to apply the same pattern to search indexing and
+background workers.
 
 These examples demonstrate that the library isn't merely a retry helper. It is designed around real distributed-system consistency boundaries.
 
