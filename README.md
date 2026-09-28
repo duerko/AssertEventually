@@ -74,6 +74,11 @@ Use `EventuallyReportFormatter.Format(report)` to render a
 framework-neutral human-readable timeline for logs, CI output, or
 custom test integrations.
 
+For machine-readable diagnostics, use
+`EventuallyJsonReportFormatter.Format(report)`. It emits explicit
+metadata and formatted values rather than attempting to serialize
+arbitrary observed objects or exception graphs.
+
 Both synchronous observations and asynchronous assertions are supported:
 
 ```csharp

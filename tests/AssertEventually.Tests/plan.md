@@ -624,7 +624,7 @@ The failure message should be useful directly in a terminal, IDE, CI log, or Git
 
 ---
 
-# 17. Structured JSON report
+# 17. Structured JSON report — complete
 
 Add optional JSON serialization:
 

@@ -192,6 +192,25 @@ namespace AssertEventually.Tests
         }
 
         [Fact]
+        public async Task Formats_a_safe_structured_json_report()
+        {
+            var exception = await Assert.ThrowsAsync<EventuallyTimeoutException>(() =>
+                AssertEventually
+                    .That<int>(value => Assert.Equal(42, value))
+                    .For(() => 1)
+                    .Within(
+                        TimeSpan.FromMilliseconds(150),
+                        new EventuallyOptions { MaxRecordedAttempts = 1 }));
+
+            var json = EventuallyJsonReportFormatter.Format(exception.Report);
+
+            Assert.Contains("\"successful\": false", json);
+            Assert.Contains("\"attemptHistory\"", json);
+            Assert.Contains("\"kind\": \"AssertionFailure\"", json);
+            Assert.Contains("\"type\": \"Xunit.Sdk.EqualException\"", json);
+        }
+
+        [Fact]
         public async Task Limits_recorded_attempt_history()
         {
             var exception = await Assert.ThrowsAsync<EventuallyTimeoutException>(() =>
