@@ -165,5 +165,24 @@ namespace AssertEventually.Tests
             Assert.True(attempt.Duration >= TimeSpan.Zero);
             Assert.Equal("2", attempt.FormatObservedValue());
         }
+
+        [Fact]
+        public async Task Limits_recorded_attempt_history()
+        {
+            var exception = await Assert.ThrowsAsync<EventuallyTimeoutException>(() =>
+                AssertEventually
+                    .That<int>(value => Assert.Equal(42, value))
+                    .For(() => 1)
+                    .Within(
+                        TimeSpan.FromSeconds(2),
+                        new EventuallyOptions { MaxRecordedAttempts = 2 }));
+
+            Assert.Equal(2, exception.Report.Attempts.Count);
+            Assert.True(exception.Report.OmittedAttemptCount > 0);
+            Assert.Equal(1, exception.Report.Attempts[0].Number);
+            Assert.Equal(
+                exception.Report.Attempts[^1].Number,
+                exception.Report.OmittedAttemptCount + 2);
+        }
     }
 }

@@ -15,18 +15,30 @@ public sealed class EventuallyExecution<T>
         _observation = observation;
     }
 
-    public async Task Within(TimeSpan timeout)
+    public async Task Within(
+        TimeSpan timeout,
+        EventuallyOptions? options = null)
     {
         if (timeout <= TimeSpan.Zero)
             throw new ArgumentOutOfRangeException(nameof(timeout), "Timeout must be positive.");
 
+        options ??= new EventuallyOptions();
+        if (options.MaxRecordedAttempts < 1)
+        {
+            throw new ArgumentOutOfRangeException(
+                nameof(options),
+                "MaxRecordedAttempts must be at least 1.");
+        }
+
         var stopwatch = System.Diagnostics.Stopwatch.StartNew();
         var attempts = new List<EventuallyAttempt>();
+        var omittedAttemptCount = 0;
         Exception? lastException = null;
+        var attemptNumber = 0;
 
         while (stopwatch.Elapsed < timeout)
         {
-            var attemptNumber = attempts.Count + 1;
+            attemptNumber++;
             var attemptStopwatch = System.Diagnostics.Stopwatch.StartNew();
             T? value = default;
 
@@ -37,7 +49,11 @@ public sealed class EventuallyExecution<T>
             catch (Exception ex)
             {
                 lastException = ex;
-                attempts.Add(new EventuallyAttempt(
+                RecordAttempt(
+                    attempts,
+                    options.MaxRecordedAttempts,
+                    ref omittedAttemptCount,
+                    new EventuallyAttempt(
                     attemptNumber,
                     stopwatch.Elapsed,
                     attemptStopwatch.Elapsed,
@@ -51,20 +67,32 @@ public sealed class EventuallyExecution<T>
             {
                 await _assertion(value);
 
-                attempts.Add(new EventuallyAttempt(
+                RecordAttempt(
+                    attempts,
+                    options.MaxRecordedAttempts,
+                    ref omittedAttemptCount,
+                    new EventuallyAttempt(
                     attemptNumber,
                     stopwatch.Elapsed,
                     attemptStopwatch.Elapsed,
                     EventuallyAttemptKind.Success,
                     value,
                     null));
-                Report = CreateReport(timeout, stopwatch.Elapsed, attempts);
+                Report = CreateReport(
+                    timeout,
+                    stopwatch.Elapsed,
+                    attempts,
+                    omittedAttemptCount);
                 return;
             }
             catch (Exception ex)
             {
                 lastException = ex;
-                attempts.Add(new EventuallyAttempt(
+                RecordAttempt(
+                    attempts,
+                    options.MaxRecordedAttempts,
+                    ref omittedAttemptCount,
+                    new EventuallyAttempt(
                     attemptNumber,
                     stopwatch.Elapsed,
                     attemptStopwatch.Elapsed,
@@ -82,7 +110,11 @@ public sealed class EventuallyExecution<T>
                 TimeSpan.FromMilliseconds(Math.Min(100, remaining.TotalMilliseconds)));
         }
 
-        var report = CreateReport(timeout, stopwatch.Elapsed, attempts);
+        var report = CreateReport(
+            timeout,
+            stopwatch.Elapsed,
+            attempts,
+            omittedAttemptCount);
         Report = report;
 
         throw new EventuallyTimeoutException(
@@ -94,11 +126,38 @@ public sealed class EventuallyExecution<T>
     private static EventuallyExecutionReport CreateReport(
         TimeSpan timeout,
         TimeSpan duration,
-        List<EventuallyAttempt> attempts)
+        List<EventuallyAttempt> attempts,
+        int omittedAttemptCount)
     {
         return new EventuallyExecutionReport(
             timeout,
             duration,
-            attempts.AsReadOnly());
+            attempts.AsReadOnly(),
+            omittedAttemptCount);
+    }
+
+    private static void RecordAttempt(
+        List<EventuallyAttempt> attempts,
+        int maximum,
+        ref int omittedAttemptCount,
+        EventuallyAttempt attempt)
+    {
+        if (attempts.Count < maximum)
+        {
+            attempts.Add(attempt);
+            return;
+        }
+
+        if (maximum > 1)
+        {
+            attempts.RemoveAt(1);
+            attempts.Add(attempt);
+        }
+        else
+        {
+            attempts[^1] = attempt;
+        }
+
+        omittedAttemptCount++;
     }
 }

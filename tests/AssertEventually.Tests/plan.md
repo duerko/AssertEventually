@@ -348,7 +348,7 @@ This also gives future integrations the ability to render the same information d
 
 ---
 
-# 7. Do not retain unbounded history
+# 7. Do not retain unbounded history — complete
 
 Record attempt history, but provide a configurable limit.
 

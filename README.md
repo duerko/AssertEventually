@@ -22,6 +22,11 @@ failure, or success, and includes the observed value when one was
 available. Reports can format observed values through the
 `IEventuallyValueFormatter` abstraction.
 
+Recorded history is bounded by default. Pass
+`EventuallyOptions.MaxRecordedAttempts` to control the limit; reports
+retain the first and most recent attempts and expose the number of
+omitted attempts.
+
 Both synchronous observations and asynchronous assertions are supported:
 
 ```csharp
