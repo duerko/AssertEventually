@@ -137,7 +137,7 @@ namespace AssertEventually.Tests
             Assert.Equal(
                 EventuallyAttemptKind.ObservationException,
                 exception.Report.Attempts[0].Kind);
-            Assert.IsType<Xunit.Sdk.EqualException>(
+            Assert.IsType<global::Xunit.Sdk.EqualException>(
                 exception.Report.Attempts[1].Exception);
             Assert.Equal(
                 EventuallyAttemptKind.AssertionFailure,
@@ -208,6 +208,20 @@ namespace AssertEventually.Tests
             Assert.Contains("\"attemptHistory\"", json);
             Assert.Contains("\"kind\": \"AssertionFailure\"", json);
             Assert.Contains("\"type\": \"Xunit.Sdk.EqualException\"", json);
+        }
+
+        [Fact]
+        public async Task xUnit_adapter_surfaces_timeout_diagnostics()
+        {
+            var exception = await Assert.ThrowsAsync<global::Xunit.Sdk.XunitException>(() =>
+                global::AssertEventually.Xunit.XunitEventually.AssertAsync(
+                    AssertEventually
+                        .That<int>(value => Assert.Equal(42, value))
+                        .For(() => 1),
+                    TimeSpan.FromMilliseconds(150)));
+
+            Assert.Contains("AssertEventually failed", exception.Message);
+            Assert.IsType<EventuallyTimeoutException>(exception.InnerException);
         }
 
         [Fact]

@@ -85,6 +85,11 @@ Framework integrations are separate packages:
 depends on the core package, while the core remains test-framework
 neutral.
 
+The xUnit adapter provides `XunitEventually.AssertAsync(...)`, which
+accepts the execution timeout, surfaces the core timeline as native
+xUnit failure output, and retains the original timeout exception as
+the inner exception.
+
 Both synchronous observations and asynchronous assertions are supported:
 
 ```csharp

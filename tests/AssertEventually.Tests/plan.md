@@ -689,7 +689,7 @@ Framework-specific packages allow the same core report to appear naturally in ea
 
 ---
 
-# 19. xUnit integration
+# 19. xUnit integration — complete
 
 Support xUnit.net v3 first.
 
