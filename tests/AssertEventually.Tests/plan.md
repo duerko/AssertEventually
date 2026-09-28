@@ -1066,7 +1066,7 @@ A framework adapter that compiles but doesn't behave correctly inside the real r
 
 MTP/VSTest behavior differs across frameworks, so real runner tests are necessary.
 
-# 34. Package targeting — pending
+# 34. Package targeting — complete
 
 Target a modern baseline initially, preferably:
 
@@ -1079,6 +1079,10 @@ Justification
 Modern .NET test platforms are moving toward Microsoft.Testing.Platform and current .NET versions, while xUnit's current v3 extensibility supports netstandard2.0 and current runtimes.
 
 Do not sacrifice API quality and maintainability merely to support every historical .NET runtime.
+
+All library, adapter, and core test projects target `net8.0`, establishing
+the planned modern baseline while retaining compatibility with current
+long-term-support .NET tooling. CI remains deferred under sections 44–45.
 
 # 35. NuGet package design — pending
 

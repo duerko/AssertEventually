@@ -6,6 +6,8 @@ It is designed for tests where the intermediate state of a system
 does not matter — only that the system eventually reaches the
 expected state within a given amount of time.
 
+The packages target `net8.0` as the supported baseline.
+
 Failures and exceptions during the observation period are treated
 as intermediate observations. The test only fails if the expected
 condition is not eventually met.
