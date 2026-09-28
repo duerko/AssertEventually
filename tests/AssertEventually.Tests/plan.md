@@ -1522,7 +1522,7 @@ Users need a canonical specification to know exactly what the library guarantees
 cancellation behavior, timing, polling, and bounded diagnostic
 retention. The README links to it from the execution-semantics section.
 
-# 53. README visual polish — pending
+# 53. README visual polish — complete
 
 Use:
 
@@ -1551,6 +1551,11 @@ Justification
 The GitHub repository is the project's storefront.
 
 A developer should understand the problem, API, and value proposition without opening another document.
+
+The README now uses a concise hero, badges, short examples, clear
+headings, and horizontal conceptual sections without adding a CI badge
+while CI remains deferred. The architecture diagram and failure
+example are tracked independently in sections 54–55.
 
 # 54. README architecture diagram — pending
 
