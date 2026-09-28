@@ -2,8 +2,10 @@ using NUnit.Framework;
 
 namespace AssertEventually.NUnit;
 
+/// <summary>Provides NUnit integration for AssertEventually.</summary>
 public static class NUnitEventually
 {
+    /// <summary>Runs an eventual assertion through NUnit.</summary>
     public static async Task AssertAsync<T>(
         EventuallyExecution<T> execution,
         TimeSpan timeout,

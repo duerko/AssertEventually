@@ -1,5 +1,6 @@
 namespace AssertEventually;
 
+/// <summary>Immutable diagnostics produced by an eventual execution.</summary>
 public sealed class EventuallyExecutionReport
 {
     internal EventuallyExecutionReport(
@@ -16,28 +17,39 @@ public sealed class EventuallyExecutionReport
         Description = description;
     }
 
+    /// <summary>Configured execution timeout.</summary>
     public TimeSpan Timeout { get; }
 
+    /// <summary>Elapsed monotonic execution duration.</summary>
     public TimeSpan Duration { get; }
 
+    /// <summary>Optional assertion and observation description.</summary>
     public string? Description { get; }
 
+    /// <summary>Bounded attempt history.</summary>
     public IReadOnlyList<EventuallyAttempt> Attempts { get; }
 
+    /// <summary>Number of attempts omitted from the bounded history.</summary>
     public int OmittedAttemptCount { get; }
 
+    /// <summary>Total number of attempts executed.</summary>
     public int AttemptCount => Attempts.Count + OmittedAttemptCount;
 
+    /// <summary>Whether the final retained attempt succeeded.</summary>
     public bool Succeeded => LastAttempt?.Succeeded == true;
 
+    /// <summary>The final retained attempt, if any.</summary>
     public EventuallyAttempt? LastAttempt => Attempts.Count == 0
         ? null
         : Attempts[^1];
 
+    /// <summary>The value observed by the final retained attempt.</summary>
     public object? LastObservedValue => LastAttempt?.ObservedValue;
 
+    /// <summary>The exception from the final retained attempt.</summary>
     public Exception? LastException => LastAttempt?.Exception;
 
+    /// <summary>Groups repeated exceptions by type and message.</summary>
     public IReadOnlyList<EventuallyExceptionGroup> ExceptionGroups =>
         Attempts
             .Where(attempt => attempt.Exception is not null)
@@ -55,6 +67,7 @@ public sealed class EventuallyExecutionReport
                 group.Last().Elapsed))
             .ToArray();
 
+    /// <summary>Summarizes contiguous timeline behavior.</summary>
     public IReadOnlyList<EventuallyTimelineSegment> TimelineSegments =>
         CreateTimelineSegments(Attempts);
 

@@ -3,8 +3,10 @@ using System.Text;
 
 namespace AssertEventually;
 
+/// <summary>Formats execution reports as standalone HTML.</summary>
 public static class EventuallyHtmlReportFormatter
 {
+    /// <summary>Formats a report.</summary>
     public static string Format(
         EventuallyExecutionReport report,
         EventuallyReportFormattingOptions? options = null)

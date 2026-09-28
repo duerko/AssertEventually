@@ -1136,9 +1136,14 @@ project URL, tags, README/license embedding, release notes, symbols,
 SourceLink, and package validation settings. Each library project adds
 its package-specific description.
 
-# 37. Analyzer/source documentation — pending
+# 37. Analyzer/source documentation — complete
 
 Document all public APIs with XML documentation.
+
+XML documentation generation is enabled centrally in
+`Directory.Build.props`, and the public core, reporting, artifact, and
+framework adapter surfaces now carry XML summaries. SourceLink metadata
+is configured alongside the generated documentation.
 
 Warnings should explain semantic behavior, particularly:
 

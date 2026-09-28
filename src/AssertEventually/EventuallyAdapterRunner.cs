@@ -1,7 +1,9 @@
 namespace AssertEventually;
 
+/// <summary>Runs adapter executions with shared timeout behavior.</summary>
 public static class EventuallyAdapterRunner
 {
+    /// <summary>Runs an execution and invokes the timeout handler if needed.</summary>
     public static async Task RunAsync<T>(
         EventuallyExecution<T> execution,
         TimeSpan timeout,

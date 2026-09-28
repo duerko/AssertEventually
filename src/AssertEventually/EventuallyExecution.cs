@@ -1,5 +1,6 @@
 namespace AssertEventually;
 
+/// <summary>Runs an eventual assertion until it succeeds or times out.</summary>
 public sealed class EventuallyExecution<T>
 {
     private readonly Func<T, Task> _assertion;
@@ -7,8 +8,10 @@ public sealed class EventuallyExecution<T>
     private readonly string? _description;
     private CancellationToken _cancellationToken;
 
+    /// <summary>The report from the most recent completed execution.</summary>
     public EventuallyExecutionReport? Report { get; private set; }
 
+    /// <summary>Sets the delay between polling attempts.</summary>
     public EventuallyExecution<T> PollEvery(TimeSpan interval)
     {
         if (interval <= TimeSpan.Zero)
@@ -18,6 +21,7 @@ public sealed class EventuallyExecution<T>
         return this;
     }
 
+    /// <summary>Associates a cancellation token with the execution.</summary>
     public EventuallyExecution<T> WithCancellation(
         CancellationToken cancellationToken)
     {
@@ -37,6 +41,7 @@ public sealed class EventuallyExecution<T>
 
     private TimeSpan? _pollInterval;
 
+    /// <summary>Runs the execution within the specified timeout.</summary>
     public async Task Within(
         TimeSpan timeout,
         EventuallyOptions? options = null)

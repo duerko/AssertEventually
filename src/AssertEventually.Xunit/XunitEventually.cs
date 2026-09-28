@@ -2,8 +2,10 @@ using global::Xunit.Sdk;
 
 namespace AssertEventually.Xunit;
 
+/// <summary>Provides xUnit v3 integration for AssertEventually.</summary>
 public static class XunitEventually
 {
+    /// <summary>Runs an eventual assertion through xUnit.</summary>
     public static async Task AssertAsync<T>(
         EventuallyExecution<T> execution,
         TimeSpan timeout,

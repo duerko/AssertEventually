@@ -2,8 +2,10 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace AssertEventually.MSTest;
 
+/// <summary>Provides MSTest integration for AssertEventually.</summary>
 public static class MSTestEventually
 {
+    /// <summary>Runs an eventual assertion through MSTest.</summary>
     public static async Task AssertAsync<T>(
         EventuallyExecution<T> execution,
         TimeSpan timeout,

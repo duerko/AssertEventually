@@ -2,8 +2,10 @@ using System.Text.Json;
 
 namespace AssertEventually;
 
+/// <summary>Formats execution reports as bounded JSON.</summary>
 public static class EventuallyJsonReportFormatter
 {
+    /// <summary>Formats a report.</summary>
     public static string Format(
         EventuallyExecutionReport report,
         IEventuallyValueFormatter? valueFormatter = null,

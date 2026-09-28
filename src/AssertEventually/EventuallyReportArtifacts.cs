@@ -1,12 +1,15 @@
 namespace AssertEventually;
 
+/// <summary>Paths to the generated execution report artifacts.</summary>
 public sealed record EventuallyReportArtifacts(
     string TextPath,
     string JsonPath,
     string HtmlPath);
 
+/// <summary>Writes text, JSON, and HTML execution report artifacts.</summary>
 public static class EventuallyReportArtifactWriter
 {
+    /// <summary>Writes report artifacts to a directory.</summary>
     public static EventuallyReportArtifacts Write(
         EventuallyExecutionReport report,
         string directory,

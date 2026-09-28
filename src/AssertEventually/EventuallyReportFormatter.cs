@@ -2,8 +2,10 @@ using System.Text;
 
 namespace AssertEventually;
 
+/// <summary>Formats execution reports as human-readable text.</summary>
 public static class EventuallyReportFormatter
 {
+    /// <summary>Formats a report.</summary>
     public static string Format(
         EventuallyExecutionReport report,
         EventuallyReportFormattingOptions? options = null)

@@ -1,7 +1,9 @@
 namespace AssertEventually.TUnit;
 
+/// <summary>Provides TUnit integration for AssertEventually.</summary>
 public static class TUnitEventually
 {
+    /// <summary>Runs an eventual assertion through TUnit.</summary>
     public static async Task AssertAsync<T>(
         EventuallyExecution<T> execution,
         TimeSpan timeout,
@@ -46,6 +48,7 @@ public static class TUnitEventually
     }
 }
 
+/// <summary>Indicates a TUnit eventual assertion timeout.</summary>
 public sealed class TUnitEventuallyException : Exception
 {
     internal TUnitEventuallyException(string message, Exception innerException)

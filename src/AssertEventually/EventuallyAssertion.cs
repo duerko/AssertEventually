@@ -1,5 +1,6 @@
 namespace AssertEventually;
 
+/// <summary>Configures the assertion and observation used for polling.</summary>
 public sealed class EventuallyAssertion<T>
 {
     private readonly Func<T, Task> _assertion;
@@ -39,11 +40,13 @@ public sealed class EventuallyAssertion<T>
         _description = description;
     }
 
+    /// <summary>Uses a synchronous observation.</summary>
     public EventuallyExecution<T> For(Func<T> observation)
     {
         return For(() => Task.FromResult(observation()));
     }
 
+    /// <summary>Uses an asynchronous observation.</summary>
     public EventuallyExecution<T> For(
         Func<Task<T>> observation
     )
@@ -51,6 +54,7 @@ public sealed class EventuallyAssertion<T>
         return new EventuallyExecution<T>(_assertion, observation, _description);
     }
 
+    /// <summary>Uses a described synchronous observation.</summary>
     public EventuallyExecution<T> For(
         string description,
         Func<T> observation)
@@ -58,6 +62,7 @@ public sealed class EventuallyAssertion<T>
         return For(description, () => Task.FromResult(observation()));
     }
 
+    /// <summary>Uses a described asynchronous observation.</summary>
     public EventuallyExecution<T> For(
         string description,
         Func<Task<T>> observation)
