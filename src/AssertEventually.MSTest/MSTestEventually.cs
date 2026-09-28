@@ -8,7 +8,8 @@ public static class MSTestEventually
         EventuallyExecution<T> execution,
         TimeSpan timeout,
         EventuallyOptions? options = null,
-        CancellationToken cancellationToken = default)
+        CancellationToken cancellationToken = default,
+        TestContext? testContext = null)
     {
         ArgumentNullException.ThrowIfNull(execution);
 
@@ -21,7 +22,25 @@ public static class MSTestEventually
         }
         catch (EventuallyTimeoutException exception)
         {
+            AttachArtifacts(exception.Report, testContext);
             Assert.Fail(EventuallyReportFormatter.Format(exception.Report));
         }
+    }
+
+    private static void AttachArtifacts(
+        EventuallyExecutionReport report,
+        TestContext? testContext)
+    {
+        if (testContext is null)
+            return;
+
+        var artifacts = EventuallyReportArtifactWriter.Write(
+            report,
+            Path.Combine(
+                testContext.ResultsDirectory,
+                "assert-eventually"));
+        testContext.AddResultFile(artifacts.TextPath);
+        testContext.AddResultFile(artifacts.JsonPath);
+        testContext.AddResultFile(artifacts.HtmlPath);
     }
 }

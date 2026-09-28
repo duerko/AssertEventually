@@ -114,6 +114,11 @@ responsibility of the runner and its existing extensions.
 HTML timeline with escaped diagnostic values, timing metadata, status,
 and omitted-attempt information.
 
+On timeout, the framework adapters write text, JSON, and HTML reports
+and attach them through the framework-native result surface when a
+runner context is available: xUnit v3 `TestContext`, NUnit
+`TestContext`, MSTest `TestContext`, or TUnit `TestContext`.
+
 Built-in formatters accept `EventuallyReportFormattingOptions` to
 limit diagnostic string length and redact sensitive content before it
 is rendered.

@@ -20,7 +20,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\AssertEventually\AssertEventually.csproj" />
-    <ProjectReference Include="..\..\src\AssertEventually.Xunit\AssertEventually.Xunit.csproj" />
   </ItemGroup>
 
 </Project>

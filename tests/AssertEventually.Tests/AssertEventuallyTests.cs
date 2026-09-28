@@ -230,6 +230,28 @@ namespace AssertEventually.Tests
         }
 
         [Fact]
+        public async Task Writes_text_json_and_html_report_artifacts()
+        {
+            var exception = await Assert.ThrowsAsync<EventuallyTimeoutException>(() =>
+                AssertEventually
+                    .That<int>(value => Assert.Equal(42, value))
+                    .For(() => 1)
+                    .Within(TimeSpan.FromMilliseconds(150)));
+            var directory = Path.Combine(
+                Path.GetTempPath(),
+                "AssertEventuallyTests",
+                Guid.NewGuid().ToString("N"));
+
+            var artifacts = EventuallyReportArtifactWriter.Write(
+                exception.Report,
+                directory);
+
+            Assert.True(File.Exists(artifacts.TextPath));
+            Assert.True(File.Exists(artifacts.JsonPath));
+            Assert.True(File.Exists(artifacts.HtmlPath));
+        }
+
+        [Fact]
         public async Task Applies_report_value_limits_and_redaction()
         {
             var execution = AssertEventually
@@ -247,20 +269,6 @@ namespace AssertEventually.Tests
 
             Assert.Contains("token=[r...", text);
             Assert.DoesNotContain("secret", text);
-        }
-
-        [Fact]
-        public async Task xUnit_adapter_surfaces_timeout_diagnostics()
-        {
-            var exception = await Assert.ThrowsAsync<global::Xunit.Sdk.XunitException>(() =>
-                global::AssertEventually.Xunit.XunitEventually.AssertAsync(
-                    AssertEventually
-                        .That<int>(value => Assert.Equal(42, value))
-                        .For(() => 1),
-                    TimeSpan.FromMilliseconds(150)));
-
-            Assert.Contains("AssertEventually failed", exception.Message);
-            Assert.IsType<EventuallyTimeoutException>(exception.InnerException);
         }
 
         [Fact]

@@ -21,7 +21,21 @@ public static class NUnitEventually
         }
         catch (EventuallyTimeoutException exception)
         {
+            AttachArtifacts(exception.Report);
             Assert.Fail(EventuallyReportFormatter.Format(exception.Report));
         }
+    }
+
+    private static void AttachArtifacts(EventuallyExecutionReport report)
+    {
+        var artifacts = EventuallyReportArtifactWriter.Write(
+            report,
+            Path.Combine(
+                Path.GetTempPath(),
+                "AssertEventually",
+                Guid.NewGuid().ToString("N")));
+        TestContext.AddTestAttachment(artifacts.TextPath, "AssertEventually text report");
+        TestContext.AddTestAttachment(artifacts.JsonPath, "AssertEventually JSON report");
+        TestContext.AddTestAttachment(artifacts.HtmlPath, "AssertEventually HTML report");
     }
 }
