@@ -10,20 +10,17 @@ public static class NUnitEventually
         EventuallyOptions? options = null,
         CancellationToken cancellationToken = default)
     {
-        ArgumentNullException.ThrowIfNull(execution);
-
-        try
-        {
-            await execution
-                .WithCancellation(cancellationToken)
-                .Within(timeout, options)
-                .ConfigureAwait(false);
-        }
-        catch (EventuallyTimeoutException exception)
-        {
-            AttachArtifacts(exception.Report);
-            Assert.Fail(EventuallyReportFormatter.Format(exception.Report));
-        }
+        await EventuallyAdapterRunner.RunAsync(
+            execution,
+            timeout,
+            options,
+            cancellationToken,
+            exception =>
+            {
+                AttachArtifacts(exception.Report);
+                Assert.Fail(EventuallyReportFormatter.Format(exception.Report));
+                return Task.CompletedTask;
+            });
     }
 
     private static void AttachArtifacts(EventuallyExecutionReport report)

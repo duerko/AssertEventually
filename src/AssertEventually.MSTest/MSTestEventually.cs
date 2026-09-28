@@ -11,33 +11,30 @@ public static class MSTestEventually
         CancellationToken cancellationToken = default,
         TestContext? testContext = null)
     {
-        ArgumentNullException.ThrowIfNull(execution);
-
-        try
-        {
-            await execution
-                .WithCancellation(cancellationToken)
-                .Within(timeout, options)
-                .ConfigureAwait(false);
-        }
-        catch (EventuallyTimeoutException exception)
-        {
-            AttachArtifacts(exception.Report, testContext);
-            Assert.Fail(EventuallyReportFormatter.Format(exception.Report));
-        }
+        await EventuallyAdapterRunner.RunAsync(
+            execution,
+            timeout,
+            options,
+            cancellationToken,
+            exception =>
+            {
+                AttachArtifacts(exception.Report, testContext);
+                Assert.Fail(EventuallyReportFormatter.Format(exception.Report));
+                return Task.CompletedTask;
+            });
     }
 
     private static void AttachArtifacts(
         EventuallyExecutionReport report,
         TestContext? testContext)
     {
-        if (testContext is null)
+        if (testContext?.ResultsDirectory is not { } resultsDirectory)
             return;
 
         var artifacts = EventuallyReportArtifactWriter.Write(
             report,
             Path.Combine(
-                testContext.ResultsDirectory,
+                resultsDirectory,
                 "assert-eventually"));
         testContext.AddResultFile(artifacts.TextPath);
         testContext.AddResultFile(artifacts.JsonPath);

@@ -1635,7 +1635,7 @@ and re-open them as the remaining work.
 
 ---
 
-# 60. Deduplicate the framework adapter implementations — pending
+# 60. Deduplicate the framework adapter implementations — complete
 
 `XunitEventually.AssertAsync`, `NUnitEventually.AssertAsync`,
 `MSTestEventually.AssertAsync`, and `TUnitEventually.AssertAsync` are

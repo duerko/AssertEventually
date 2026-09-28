@@ -119,6 +119,9 @@ and attach them through the framework-native result surface when a
 runner context is available: xUnit v3 `TestContext`, NUnit
 `TestContext`, MSTest `TestContext`, or TUnit `TestContext`.
 
+All adapters share the core `EventuallyAdapterRunner`, so timeout and
+cancellation semantics stay consistent across frameworks.
+
 Built-in formatters accept `EventuallyReportFormattingOptions` to
 limit diagnostic string length and redact sensitive content before it
 is rendered.

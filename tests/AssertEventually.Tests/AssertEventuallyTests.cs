@@ -252,6 +252,28 @@ namespace AssertEventually.Tests
         }
 
         [Fact]
+        public async Task Adapter_runner_delegates_timeout_handling_once()
+        {
+            EventuallyTimeoutException? timeout = null;
+
+            await EventuallyAdapterRunner.RunAsync(
+                AssertEventually
+                    .That<int>(value => Assert.Equal(42, value))
+                    .For(() => 1),
+                TimeSpan.FromMilliseconds(150),
+                null,
+                CancellationToken.None,
+                exception =>
+                {
+                    timeout = exception;
+                    return Task.CompletedTask;
+                });
+
+            Assert.NotNull(timeout);
+            Assert.NotNull(timeout!.Report);
+        }
+
+        [Fact]
         public async Task Applies_report_value_limits_and_redaction()
         {
             var execution = AssertEventually

@@ -9,17 +9,13 @@ public static class TUnitEventually
         CancellationToken cancellationToken = default,
         global::TUnit.Core.TestContext? testContext = null)
     {
-        ArgumentNullException.ThrowIfNull(execution);
-
-        try
-        {
-            await execution
-                .WithCancellation(cancellationToken)
-                .Within(timeout, options)
-                .ConfigureAwait(false);
-        }
-        catch (EventuallyTimeoutException exception)
-        {
+        await EventuallyAdapterRunner.RunAsync(
+            execution,
+            timeout,
+            options,
+            cancellationToken,
+            exception =>
+            {
             var context = testContext ?? global::TUnit.Core.TestContext.Current;
             if (context is not null)
             {
@@ -43,10 +39,10 @@ public static class TUnitEventually
                     "Visual convergence timeline");
             }
 
-            throw new TUnitEventuallyException(
-                EventuallyReportFormatter.Format(exception.Report),
-                exception);
-        }
+                throw new TUnitEventuallyException(
+                    EventuallyReportFormatter.Format(exception.Report),
+                    exception);
+            });
     }
 }
 

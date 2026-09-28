@@ -10,22 +10,18 @@ public static class XunitEventually
         EventuallyOptions? options = null,
         CancellationToken cancellationToken = default)
     {
-        ArgumentNullException.ThrowIfNull(execution);
-
-        try
-        {
-            await execution
-                .WithCancellation(cancellationToken)
-                .Within(timeout, options)
-                .ConfigureAwait(false);
-        }
-        catch (EventuallyTimeoutException exception)
-        {
-            AttachArtifacts(exception.Report);
-            throw new XunitException(
-                EventuallyReportFormatter.Format(exception.Report),
-                exception);
-        }
+        await EventuallyAdapterRunner.RunAsync(
+            execution,
+            timeout,
+            options,
+            cancellationToken,
+            exception =>
+            {
+                AttachArtifacts(exception.Report);
+                throw new XunitException(
+                    EventuallyReportFormatter.Format(exception.Report),
+                    exception);
+            });
     }
 
     private static void AttachArtifacts(EventuallyExecutionReport report)
