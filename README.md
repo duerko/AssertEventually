@@ -62,6 +62,10 @@ Assertion duration is recorded separately as well, making it possible
 to identify whether convergence is slow because of the system under
 observation or the assertion itself.
 
+Successful executions retain their report for optional diagnostics;
+`EventuallyExecution.Report.Succeeded` identifies successful
+convergence without producing output automatically.
+
 Both synchronous observations and asynchronous assertions are supported:
 
 ```csharp

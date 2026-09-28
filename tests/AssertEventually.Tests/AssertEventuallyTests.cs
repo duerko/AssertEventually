@@ -160,6 +160,7 @@ namespace AssertEventually.Tests
             report = execution.Report;
 
             var attempt = Assert.Single(report!.Attempts);
+            Assert.True(report.Succeeded);
             Assert.Equal(EventuallyAttemptKind.Success, attempt.Kind);
             Assert.Equal(2, attempt.ObservedValue);
             Assert.True(attempt.Duration >= TimeSpan.Zero);

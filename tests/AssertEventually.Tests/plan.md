@@ -513,7 +513,7 @@ Separating observation time from assertion time gives useful performance diagnos
 
 ---
 
-# 14. Success diagnostics
+# 14. Success diagnostics — complete
 
 Do not only produce diagnostics on failure.
 

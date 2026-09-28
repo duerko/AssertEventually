@@ -22,6 +22,8 @@ public sealed class EventuallyExecutionReport
 
     public int OmittedAttemptCount { get; }
 
+    public bool Succeeded => LastAttempt?.Succeeded == true;
+
     public EventuallyAttempt? LastAttempt => Attempts.Count == 0
         ? null
         : Attempts[^1];
