@@ -1658,7 +1658,7 @@ packages, which will not scale as more frameworks are added.
 
 ---
 
-# 61. Improve default formatting of complex observed values — pending
+# 61. Improve default formatting of complex observed values — complete
 
 `DefaultEventuallyValueFormatter` falls back to `value.ToString()`.
 For a typical domain object without a `ToString()` override (the

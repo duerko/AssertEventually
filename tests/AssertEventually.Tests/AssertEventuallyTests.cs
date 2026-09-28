@@ -274,6 +274,28 @@ namespace AssertEventually.Tests
         }
 
         [Fact]
+        public async Task Formats_public_properties_for_default_domain_values()
+        {
+            var exception = await Assert.ThrowsAsync<EventuallyTimeoutException>(() =>
+                AssertEventually
+                    .That<DomainValue>(value => Assert.Equal("Processed", value.Status))
+                    .For(() => new DomainValue { Id = 123, Status = "Pending" })
+                    .Within(TimeSpan.FromMilliseconds(150)));
+
+            var text = EventuallyReportFormatter.Format(exception.Report);
+
+            Assert.Contains("Id = 123", text);
+            Assert.Contains("Status = Pending", text);
+        }
+
+        private sealed class DomainValue
+        {
+            public int Id { get; init; }
+
+            public string Status { get; init; } = string.Empty;
+        }
+
+        [Fact]
         public async Task Applies_report_value_limits_and_redaction()
         {
             var execution = AssertEventually

@@ -126,6 +126,10 @@ Built-in formatters accept `EventuallyReportFormattingOptions` to
 limit diagnostic string length and redact sensitive content before it
 is rendered.
 
+The default value formatter expands bounded public object properties
+and collection elements, while limiting depth and preserving custom
+`IEventuallyValueFormatter` implementations.
+
 Reports group repeated exception type/message pairs and expose their
 counts and first/last occurrence times through `ExceptionGroups`.
 
