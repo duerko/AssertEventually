@@ -1368,7 +1368,7 @@ Framework integrations are independently version-sensitive.
 
 A matrix catches breakage that a single test project cannot.
 
-# 46. Mutation/property testing consideration — pending
+# 46. Mutation/property testing consideration — deferred
 
 After the initial implementation is stable, consider mutation testing for the execution engine.
 
@@ -1384,6 +1384,10 @@ Justification
 A retry/convergence engine can appear well tested while having subtle semantic gaps.
 
 Mutation testing verifies that the tests actually protect the algorithm.
+
+Deferred until the execution semantics and framework integration
+projects are stable; no mutation-testing tool is added to the product
+or test dependencies yet.
 
 # 47. Performance tests — pending
 
