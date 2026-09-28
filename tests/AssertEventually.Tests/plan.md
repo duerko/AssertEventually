@@ -1680,7 +1680,7 @@ proposition is undermined for most real-world usage.
 
 ---
 
-# 62. Resolve the `AssertEventually` type/namespace collision — pending
+# 62. Resolve the `AssertEventually` type/namespace collision — complete
 
 The entry-point class `AssertEventually` lives inside the
 `AssertEventually` namespace, so the type name is identical to its
@@ -1693,6 +1693,14 @@ Evaluate renaming the entry-point type (e.g. `Eventually`) while
 keeping `AssertEventually` as the namespace/package name, or
 explicitly confirm and document why the collision is intentional and
 safe.
+
+Decision: retain the established `AssertEventually.That(...)` entry
+point. The fluent API is the product's primary usage surface, and
+renaming it would be a breaking change without improving execution or
+diagnostic behavior. The type is publicly accessible as
+`global::AssertEventually.AssertEventually` when an explicit type name
+is required, so the collision does not prevent normal usage,
+reflection, or documentation generation.
 
 ### Justification
 

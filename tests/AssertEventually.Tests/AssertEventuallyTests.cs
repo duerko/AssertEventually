@@ -288,6 +288,15 @@ namespace AssertEventually.Tests
             Assert.Contains("Status = Pending", text);
         }
 
+        [Fact]
+        public void Keeps_the_fluent_entry_point_explicitly_available()
+        {
+            var assertion = global::AssertEventually.AssertEventually
+                .That<int>(value => Assert.Equal(1, value));
+
+            Assert.NotNull(assertion);
+        }
+
         private sealed class DomainValue
         {
             public int Id { get; init; }

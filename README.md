@@ -10,6 +10,11 @@ Failures and exceptions during the observation period are treated
 as intermediate observations. The test only fails if the expected
 condition is not eventually met.
 
+The public entry point intentionally uses the fluent
+`AssertEventually.That(...)` form. When an explicit type reference is
+needed, use `global::AssertEventually.AssertEventually`; retaining this
+name avoids breaking the established API.
+
 The core execution model records an ordered convergence timeline. Each
 attempt includes its elapsed time and any observation or assertion
 exception. Successful executions expose this through
