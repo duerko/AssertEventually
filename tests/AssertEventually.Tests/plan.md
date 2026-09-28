@@ -1679,6 +1679,12 @@ produce framework-native diagnostics/artifacts where possible
 have a polished README
 have real integration tests for every framework
 have CI covering the supported matrix
+
+The core behavior, reports, adapters, artifacts, README, and package
+baseline are implemented. This acceptance gate remains pending until
+section 33 supplies real runner-backed integration tests and sections
+44–45 are explicitly authorized and completed; CI work remains
+deferred by direction.
 # 58. Most important implementation principle — complete
 
 Do not optimize for feature count.
