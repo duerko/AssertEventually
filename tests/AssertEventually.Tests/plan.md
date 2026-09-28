@@ -1831,7 +1831,7 @@ against the repository and now carry explicit `complete`, `pending`, or
 `deferred` markers. Confirmed gaps and intentional deferrals as of this
 audit:
 
-* **Section 1** (repository architecture, pending): `docs/`,
+* **Section 1** (repository architecture): `docs/`,
   `CHANGELOG.md`, `Directory.Build.props`, benchmark sources, and
   per-adapter test projects now exist. The sample project and
   contributor guide are also present.
